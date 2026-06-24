@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>HIFZ AI PRO · Complete Quran | Hammad Sayed</title>
+    <title>HIFZ AI PRO · Ultimate Edition | Hammad Sayed</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -17,9 +17,11 @@
             --border: #e2e8f0;
             --success: #10b981;
             --danger: #ef4444;
-            --tajweed-red: #dc2626;
-            --tajweed-blue: #2563eb;
-            --tajweed-green: #16a34a;
+            --purple: #7c3aed;
+            --pink: #db2777;
+            --orange: #f97316;
+            --blue: #3b82f6;
+            --teal: #14b8a6;
         }
 
         [data-theme="dark"] {
@@ -45,12 +47,8 @@
         .arabic-text {
             font-family: 'Scheherazade New', serif;
             direction: rtl;
-            line-height: 2.4;
+            line-height: 2.6;
         }
-
-        .tajweed-red { color: var(--tajweed-red); }
-        .tajweed-blue { color: var(--tajweed-blue); }
-        .tajweed-green { color: var(--tajweed-green); }
 
         header {
             background: linear-gradient(135deg, var(--primary-dark), var(--primary));
@@ -169,6 +167,12 @@
         .btn-gold { background: var(--gold); color: var(--primary-dark); }
         .btn-secondary { background: var(--border); color: var(--text); }
         .btn-danger { background: var(--danger); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-purple { background: var(--purple); color: white; }
+        .btn-pink { background: var(--pink); color: white; }
+        .btn-orange { background: var(--orange); color: white; }
+        .btn-blue { background: var(--blue); color: white; }
+        .btn-teal { background: var(--teal); color: white; }
 
         select, input {
             width: 100%;
@@ -226,29 +230,6 @@
             margin: 0 0.5rem;
         }
 
-        .word {
-            display: inline-block;
-            padding: 0.15rem 0.3rem;
-            margin: 0.05rem;
-            border-radius: 4px;
-            transition: all 0.3s;
-            font-size: 1.6rem;
-        }
-        .word.correct { background: var(--success); color: white; animation: pop 0.4s; }
-        .word.wrong { background: var(--danger); color: white; animation: shake 0.4s; }
-        .word.highlight { background: rgba(245, 158, 11, 0.3); border-radius: 4px; }
-
-        @keyframes pop { 
-            0% { transform: scale(0.5); } 
-            70% { transform: scale(1.2); } 
-            100% { transform: scale(1); } 
-        }
-        @keyframes shake { 
-            0%, 100% { transform: translateX(0); } 
-            25% { transform: translateX(-6px); } 
-            75% { transform: translateX(6px); } 
-        }
-
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -301,24 +282,203 @@
             cursor: pointer;
         }
 
-        .lock-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(6, 78, 59, 0.96);
-            z-index: 9999;
-            display: none;
-            align-items: center; justify-content: center;
+        /* Rakat Table Styles - Exact match to image */
+        .rakat-table-wrapper {
+            overflow-x: auto;
+            margin-top: 0.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+        }
+        .rakat-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            min-width: 750px;
+        }
+        .rakat-table th {
+            background: var(--primary);
             color: white;
-            backdrop-filter: blur(8px);
+            padding: 0.8rem 0.5rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: 1px solid var(--primary-dark);
         }
-        .lock-overlay.active { display: flex; }
-        .lock-box {
-            text-align: center; padding: 3rem;
-            background: rgba(255,255,255,0.08);
-            border-radius: 24px; border: 2px solid var(--gold);
-            max-width: 480px; width: 90%;
-            backdrop-filter: blur(4px);
+        .rakat-table td {
+            padding: 0.7rem 0.4rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-weight: 500;
         }
-        .lock-box h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .rakat-table tr:nth-child(even) { background: var(--bg); }
+        .rakat-table tr:hover { background: rgba(5, 150, 105, 0.05); }
+        [data-theme="dark"] .rakat-table tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+
+        .rakat-table .prayer-name-cell {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        .rakat-table .header-sunnat { background: #dbeafe; color: var(--blue); font-weight: 700; }
+        .rakat-table .header-farz { background: #fecaca; color: var(--danger); font-weight: 700; }
+        .rakat-table .header-nafl { background: #d1fae5; color: var(--success); font-weight: 700; }
+        .rakat-table .header-witr { background: #ede9fe; color: var(--purple); font-weight: 700; }
+        .rakat-table .header-total { background: var(--gold); color: var(--primary-dark); font-weight: 700; }
+        
+        .rakat-table .sunnat { color: var(--blue); font-weight: 600; }
+        .rakat-table .farz { color: var(--danger); font-weight: 700; }
+        .rakat-table .nafl { color: var(--success); font-weight: 600; }
+        .rakat-table .witr { color: var(--purple); font-weight: 600; }
+        .rakat-table .total { color: var(--primary); font-weight: 800; font-size: 1.05rem; }
+        .rakat-table .muakkadah { color: var(--orange); font-weight: 700; }
+
+        .rakat-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: var(--bg);
+            border-radius: 10px;
+        }
+        .rakat-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+        }
+        .rakat-legend-item .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot-sunnat { background: var(--blue); }
+        .dot-farz { background: var(--danger); }
+        .dot-nafl { background: var(--success); }
+        .dot-witr { background: var(--purple); }
+        .dot-muakkadah { background: var(--orange); }
+
+        /* Zikr Styles */
+        .zikr-card {
+            background: linear-gradient(145deg, #d1fae5, #a7f3d0);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 2px solid var(--success);
+            margin-bottom: 1rem;
+        }
+        [data-theme="dark"] .zikr-card {
+            background: linear-gradient(145deg, #064e3b, #065f46);
+            border-color: var(--success);
+        }
+
+        .zikr-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-family: 'Scheherazade New', serif;
+            direction: rtl;
+            line-height: 2.2;
+        }
+        [data-theme="dark"] .zikr-text { color: #a7f3d0; }
+
+        .zikr-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        .zikr-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary);
+            min-width: 100px;
+        }
+        [data-theme="dark"] .zikr-number { color: var(--gold); }
+
+        .zikr-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            font-size: 2rem;
+            border: 4px solid var(--primary);
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .zikr-btn:hover { transform: scale(1.1); background: var(--primary); color: white; }
+        .zikr-btn:active { transform: scale(0.9); }
+        [data-theme="dark"] .zikr-btn { background: var(--card-bg); color: var(--gold); border-color: var(--gold); }
+        [data-theme="dark"] .zikr-btn:hover { background: var(--gold); color: var(--primary-dark); }
+
+        .zikr-progress {
+            width: 100%;
+            height: 12px;
+            background: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        .zikr-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .zikr-select-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.6rem;
+            margin: 0.5rem 0 1rem 0;
+        }
+        .zikr-select-grid .btn {
+            font-size: 0.85rem;
+            padding: 0.5rem 0.8rem;
+            white-space: nowrap;
+        }
+
+        .zikr-random-btn {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0.5rem 0;
+        }
+        .zikr-random-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4); }
+        .zikr-random-btn:active { transform: scale(0.95); }
+
+        .zikr-history-item {
+            padding: 0.5rem;
+            background: var(--bg);
+            border-radius: 8px;
+            margin-bottom: 0.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .zikr-history-item .zikr-arabic {
+            font-family: 'Scheherazade New', serif;
+            direction: rtl;
+            font-weight: 600;
+        }
 
         footer {
             text-align: center; padding: 2.5rem;
@@ -376,6 +536,12 @@
             .countdown-time { font-size: 2.2rem; }
             .logo { font-size: 1.2rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .zikr-text { font-size: 1.6rem; }
+            .zikr-number { font-size: 2.8rem; }
+            .zikr-btn { width: 60px; height: 60px; font-size: 1.6rem; }
+            .zikr-select-grid { grid-template-columns: repeat(2, 1fr); }
+            .rakat-table { font-size: 0.75rem; min-width: 500px; }
+            .rakat-table th, .rakat-table td { padding: 0.3rem 0.2rem; }
         }
 
         @media (max-width: 480px) {
@@ -383,11 +549,14 @@
             .quran-box { font-size: 1.1rem; padding: 0.75rem; }
             .countdown-time { font-size: 1.6rem; }
             .card { padding: 1rem; }
-            .lock-box { padding: 1.5rem; }
-            .word { font-size: 1.2rem; }
+            .zikr-text { font-size: 1.3rem; }
+            .zikr-number { font-size: 2rem; }
+            .zikr-btn { width: 50px; height: 50px; font-size: 1.3rem; }
+            .zikr-select-grid { grid-template-columns: 1fr 1fr; }
+            .rakat-table { font-size: 0.65rem; min-width: 400px; }
+            .rakat-table th, .rakat-table td { padding: 0.2rem 0.1rem; }
         }
 
-        /* Scrollbar styling */
         .quran-box::-webkit-scrollbar {
             width: 6px;
         }
@@ -405,17 +574,17 @@
 
     <header>
         <div class="header-top">
-            <div class="logo">🕌 HIFZ AI <span>· Complete Quran</span></div>
+            <div class="logo">🕌 HIFZ AI <span>· Ultimate</span></div>
             <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
         </div>
         <nav>
             <button class="active" onclick="showTab('home', this)">🏠 Home</button>
             <button onclick="showTab('quran', this)">📖 Quran</button>
-            <button onclick="showTab('hifz', this)">🎤 Hifz</button>
             <button onclick="showTab('salah', this)">🕌 Salah</button>
+            <button onclick="showTab('rakat', this)">🕋 Rakat</button>
+            <button onclick="showTab('zikr', this)">📿 Zikr</button>
             <button onclick="showTab('times', this)">⏰ Times</button>
             <button onclick="showTab('qibla', this)">🧭 Qibla</button>
-            <button onclick="showTab('dua', this)">💎 Dua</button>
             <button onclick="showTab('dashboard', this)">📊 Stats</button>
         </nav>
     </header>
@@ -423,7 +592,7 @@
     <div id="loadingIndicator">
         <div class="spinner"></div>
         <div style="font-size: 1.2rem; font-weight: 600;">Loading the Holy Quran...</div>
-        <div style="color: var(--text-light); margin-top: 0.5rem;">This may take a moment</div>
+        <div style="color: var(--text-light); margin-top: 0.5rem;">Please wait a moment</div>
     </div>
 
     <div class="container">
@@ -434,9 +603,9 @@
             
             <div class="card">
                 <h2>🤲 Assalamu Alaikum</h2>
-                <p style="font-size: 1.05rem;">Welcome to <strong>HIFZ AI PRO</strong> — your complete AI companion for Quran memorization, Tajweed practice, and daily Salah tracking. Built with love for TECCEx 2026.</p>
+                <p style="font-size: 1.05rem;">Welcome to <strong>HIFZ AI PRO</strong> — your complete Islamic companion for Quran reading, Salah tracking, Rakat guide, and Zikr. Built with love for TECCEx 2026.</p>
                 <div style="margin-top: 0.8rem; color: var(--text-light); font-size: 0.9rem;">
-                    📖 <strong>114 Surahs</strong> · 🎤 <strong>Voice Recognition</strong> · 🕌 <strong>Full Salah Tracker</strong>
+                    📖 <strong>114 Surahs</strong> · 📿 <strong>30+ Zikr</strong> · 🕌 <strong>Salah Tracker</strong> · 🕋 <strong>Complete Rakat Guide</strong>
                 </div>
             </div>
 
@@ -447,19 +616,20 @@
             </div>
 
             <div class="stats-grid">
-                <div class="stat-card"><div class="stat-value" id="statMastered">0</div><div class="stat-label">✨ Mastered Ayahs</div></div>
-                <div class="stat-card"><div class="stat-value" id="statStreak">0</div><div class="stat-label">🔥 Streak Days</div></div>
-                <div class="stat-card"><div class="stat-value" id="statScore">0</div><div class="stat-label">⭐ Total Score</div></div>
-                <div class="stat-card"><div class="stat-value" id="statSalah">0/5</div><div class="stat-label">🕌 Today's Prayers</div></div>
+                <div class="stat-card"><div class="stat-value" id="statStreak">0</div><div class="stat-label">🔥 Streak</div></div>
+                <div class="stat-card"><div class="stat-value" id="statScore">0</div><div class="stat-label">⭐ Score</div></div>
+                <div class="stat-card"><div class="stat-value" id="statSalah">0/5</div><div class="stat-label">🕌 Today</div></div>
+                <div class="stat-card"><div class="stat-value" id="statZikr">0</div><div class="stat-label">📿 Zikr Today</div></div>
             </div>
 
             <div class="card">
                 <h2>⚡ Quick Actions</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem;">
-                    <button class="btn btn-primary" onclick="showTab('hifz', document.querySelectorAll('nav button')[2])">🎤 Start Hifz</button>
-                    <button class="btn btn-primary" onclick="showTab('quran', document.querySelectorAll('nav button')[1])">📖 Read Quran</button>
-                    <button class="btn btn-primary" onclick="showTab('salah', document.querySelectorAll('nav button')[3])">🕌 Mark Salah</button>
-                    <button class="btn btn-gold" onclick="showTab('qibla', document.querySelectorAll('nav button')[5])">🧭 Find Qibla</button>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.8rem;">
+                    <button class="btn btn-primary" onclick="showTab('quran', document.querySelectorAll('nav button')[1])">📖 Quran</button>
+                    <button class="btn btn-primary" onclick="showTab('salah', document.querySelectorAll('nav button')[2])">🕌 Salah</button>
+                    <button class="btn btn-orange" onclick="showTab('rakat', document.querySelectorAll('nav button')[3])">🕋 Rakat</button>
+                    <button class="btn btn-gold" onclick="showTab('zikr', document.querySelectorAll('nav button')[4])">📿 Zikr</button>
+                    <button class="btn btn-purple" onclick="showTab('qibla', document.querySelectorAll('nav button')[6])">🧭 Qibla</button>
                 </div>
             </div>
 
@@ -491,60 +661,18 @@
                     <button class="btn btn-secondary" onclick="jumpToSurah(112)">112</button>
                     <button class="btn btn-secondary" onclick="jumpToSurah(114)">114</button>
                 </div>
-                <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.5rem; align-items: center;">
                     <button class="btn btn-primary" onclick="playAudio()">🔊 Play Audio</button>
                     <button class="btn btn-secondary" onclick="stopAudio()">⏹ Stop</button>
-                    <audio id="audioPlayer" controls style="flex: 1; min-width: 200px; max-width: 350px;"></audio>
+                    <audio id="audioPlayer" controls style="flex: 1; min-width: 200px; max-width: 350px; height: 40px;"></audio>
                 </div>
+                <div id="audioStatus" style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem;"></div>
             </div>
             <div class="card">
                 <div id="surahTitle" style="text-align: center; color: var(--primary); font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem;"></div>
                 <div id="quranDisplay" class="quran-box arabic-text">
                     <p style="text-align: center; color: var(--text-light); font-size: 1.2rem;">Select a Surah to begin your journey...</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- HIFZ AI TAB -->
-        <section id="hifz" class="tab">
-            <div class="card">
-                <h2>🎤 Hifz AI · Voice Recognition</h2>
-                <p style="color: var(--text-light); margin-bottom: 1rem;">Select a Surah and Ayah, click Start, and recite. The AI will check each word.</p>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div>
-                        <label style="font-weight: 600;">Surah:</label>
-                        <select id="hifzSurah" onchange="loadHifzAyahs()"></select>
-                    </div>
-                    <div>
-                        <label style="font-weight: 600;">Ayah:</label>
-                        <select id="hifzAyah" onchange="loadHifzTarget()"></select>
-                    </div>
-                </div>
-                <div style="display: flex; gap: 0.7rem; margin: 1rem 0; flex-wrap: wrap;">
-                    <button class="btn btn-primary" onclick="startHifz()">🎤 Start Reciting</button>
-                    <button class="btn btn-secondary" onclick="stopHifz()">⏹ Stop</button>
-                    <button class="btn btn-secondary" onclick="resetHifz()">🔄 Reset</button>
-                </div>
-                <div style="background: var(--card-bg); padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid var(--border);">
-                    <strong>🎙️ Status:</strong> <span id="voiceStatus" style="color: var(--text-light);">Ready</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>🎯 Target Ayah</h3>
-                <div id="hifzTarget" class="quran-box arabic-text" style="max-height: 300px; font-size: 1.8rem;">
-                    Select a Surah and Ayah to begin.
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>📊 Session Results</h3>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value" id="correctWords" style="color: var(--success);">0</div><div class="stat-label">✅ Correct</div></div>
-                    <div class="stat-card"><div class="stat-value" id="wrongWords" style="color: var(--danger);">0</div><div class="stat-label">❌ Mistakes</div></div>
-                    <div class="stat-card"><div class="stat-value" id="accuracy" style="color: var(--primary);">0%</div><div class="stat-label">🎯 Accuracy</div></div>
-                </div>
-                <div id="feedback"></div>
             </div>
         </section>
 
@@ -556,6 +684,89 @@
                     <strong>🔥 Streak: <span id="salahStreak">0</span> days · ✅ Today: <span id="salahToday">0/5</span></strong>
                 </div>
                 <div id="salahList"></div>
+            </div>
+        </section>
+
+        <!-- RAKAT TAB -->
+        <section id="rakat" class="tab">
+            <div class="card">
+                <h2>🕋 Table of Prayer Rakats</h2>
+                <p style="color: var(--text-light); margin-bottom: 0.5rem;">Complete guide with Sunnah (Muakkadah & Ghair Muakkadah), Farz, Nafl, and Witr.</p>
+                
+                <div class="rakat-legend">
+                    <div class="rakat-legend-item"><span class="dot dot-sunnat"></span> Sunnat</div>
+                    <div class="rakat-legend-item"><span class="dot dot-farz"></span> Farz</div>
+                    <div class="rakat-legend-item"><span class="dot dot-nafl"></span> Nafl</div>
+                    <div class="rakat-legend-item"><span class="dot dot-witr"></span> Witr</div>
+                    <div class="rakat-legend-item"><span class="dot dot-muakkadah"></span> Muakkadah</div>
+                </div>
+
+                <div class="rakat-table-wrapper">
+                    <table class="rakat-table">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 80px;">Prayer</th>
+                                <th class="header-sunnat">Sunnat<br><small>Muakkadah</small></th>
+                                <th class="header-farz">Farz</th>
+                                <th class="header-sunnat">Sunnat<br><small>Ghair</small></th>
+                                <th class="header-nafl">Nafl</th>
+                                <th class="header-witr">Witr</th>
+                                <th class="header-nafl">Nafl</th>
+                                <th class="header-total">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rakatBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 1rem; padding: 1rem; background: var(--bg); border-radius: 10px; font-size: 0.9rem; color: var(--text-light);">
+                    <strong>📖 Note:</strong> Jumu'ah (Friday) prayer has 2 Farz rakats instead of Zohr. 
+                    The 4 Sunnah before and 4+2 Sunnah/Nafl after are highly recommended.
+                </div>
+            </div>
+        </section>
+
+        <!-- ZIKR TAB -->
+        <section id="zikr" class="tab">
+            <div class="card">
+                <h2>📿 Zikr Counter</h2>
+                <p style="color: var(--text-light); margin-bottom: 1rem;">Perform Zikr after every Namaz. Tap the button to count.</p>
+                
+                <div class="zikr-select-grid">
+                    <button class="btn btn-primary" onclick="selectZikr('subhanallah')">📿 SubhanAllah</button>
+                    <button class="btn btn-primary" onclick="selectZikr('alhamdulillah')">📿 Alhamdulillah</button>
+                    <button class="btn btn-primary" onclick="selectZikr('allahuakbar')">📿 AllahuAkbar</button>
+                    <button class="btn btn-primary" onclick="selectZikr('astaghfirullah')">📿 Astaghfirullah</button>
+                </div>
+
+                <button class="zikr-random-btn" onclick="randomZikr()">🎲 Random Zikr</button>
+
+                <div class="zikr-card" id="zikrDisplay">
+                    <div class="zikr-text" id="zikrText">سُبْحَانَ اللَّهِ</div>
+                    <div style="color: var(--text-light); font-size: 1rem;" id="zikrTranslation">Glory be to Allah</div>
+                    
+                    <div class="zikr-counter">
+                        <button class="zikr-btn" onclick="decrementZikr()">−</button>
+                        <div class="zikr-number" id="zikrCount">0</div>
+                        <button class="zikr-btn" onclick="incrementZikr()">+</button>
+                    </div>
+                    
+                    <div class="zikr-progress">
+                        <div class="zikr-progress-bar" id="zikrProgress"></div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-success" onclick="resetZikr()">🔄 Reset</button>
+                        <button class="btn btn-gold" onclick="completeZikr()">✅ Complete</button>
+                    </div>
+                    <div id="zikrTarget" style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">Target: 33</div>
+                </div>
+
+                <div class="card" style="margin-top: 1rem;">
+                    <h3>📊 Zikr History</h3>
+                    <div id="zikrHistory" style="max-height: 200px; overflow-y: auto;"></div>
+                </div>
             </div>
         </section>
 
@@ -587,77 +798,45 @@
             </div>
         </section>
 
-        <!-- DUA TAB -->
-        <section id="dua" class="tab">
-            <div class="card">
-                <h2>💎 Daily Dua</h2>
-                <div style="text-align: center; padding: 2rem;">
-                    <div id="duaArabic" class="arabic-text" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem; line-height: 2.4;"></div>
-                    <div id="duaTranslation" style="font-style: italic; color: var(--text-light); font-size: 1.05rem; margin-bottom: 0.8rem;"></div>
-                    <div id="duaRef" style="color: var(--text-light); font-size: 0.9rem;"></div>
-                </div>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-secondary" onclick="prevDua()">◀ Previous</button>
-                    <span id="duaCounter" style="align-self: center; font-weight: 600;"></span>
-                    <button class="btn btn-secondary" onclick="nextDua()">Next ▶</button>
-                </div>
-            </div>
-        </section>
-
         <!-- DASHBOARD TAB -->
         <section id="dashboard" class="tab">
             <div class="card">
                 <h2>📊 Progress Dashboard</h2>
                 <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value" id="dashMastered">0</div><div class="stat-label">✨ Mastered Ayahs</div></div>
-                    <div class="stat-card"><div class="stat-value" id="dashAttempts">0</div><div class="stat-label">📝 Total Attempts</div></div>
-                    <div class="stat-card"><div class="stat-value" id="dashMistakes">0</div><div class="stat-label">❌ Total Mistakes</div></div>
                     <div class="stat-card"><div class="stat-value" id="dashStreak">0</div><div class="stat-label">🔥 Streak</div></div>
+                    <div class="stat-card"><div class="stat-value" id="dashSalah">0/5</div><div class="stat-label">🕌 Today</div></div>
+                    <div class="stat-card"><div class="stat-value" id="dashZikr">0</div><div class="stat-label">📿 Zikr Today</div></div>
+                    <div class="stat-card"><div class="stat-value" id="dashScore">0</div><div class="stat-label">⭐ Score</div></div>
                 </div>
-            </div>
-            <div class="card">
-                <h3>🏆 Mastered Ayahs</h3>
-                <div id="masteredList" style="max-height: 300px; overflow-y: auto;"></div>
             </div>
             <div class="card">
                 <h3>⚙️ Data Management</h3>
                 <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="exportData()">📤 Export JSON</button>
-                    <button class="btn btn-danger" onclick="resetData()">🗑️ Reset All Data</button>
+                    <button class="btn btn-danger" onclick="resetData()">🗑️ Reset All</button>
                 </div>
             </div>
         </section>
 
     </div>
 
-    <!-- LOCK OVERLAY -->
-    <div id="lockOverlay" class="lock-overlay">
-        <div class="lock-box">
-            <div style="font-size: 4.5rem; margin-bottom: 0.5rem;">🔒</div>
-            <h1>Social Media Locked</h1>
-            <p style="font-size: 1.2rem; margin-bottom: 1.5rem; opacity: 0.9;">🕌 You missed your prayer!</p>
-            <div id="lockPrayers" style="margin-bottom: 1.5rem; text-align: left; background: rgba(255,255,255,0.08); padding: 1rem; border-radius: 10px;"></div>
-            <button class="btn btn-gold" onclick="unlockApp()" style="width: 100%; padding: 1rem; font-size: 1.1rem;">✅ I Have Prayed — Unlock</button>
-        </div>
-    </div>
-
     <footer>
-        <strong>🌙 HIFZ AI PRO · Complete Quran Edition</strong><br>
+        <strong>🌙 HIFZ AI PRO · Ultimate Edition</strong><br>
         Built by <strong>Hammad Sayed</strong> · Grade 9D · Leaders Private School · UAE<br>
         TECCEx 2026 · Theme: SPARK · Category: Tech-Horizon
         <div class="arabic-text" style="font-size: 1.5rem; color: var(--primary); margin-top: 1rem;">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
         <div style="font-size: 0.95rem; margin-top: 0.5rem;">"My Lord, increase me in knowledge." — Quran 20:114</div>
-        <div style="font-size: 0.8rem; margin-top: 0.8rem; opacity: 0.7;">📖 All 114 Surahs · Tajweed Ready · Voice AI Powered</div>
+        <div style="font-size: 0.8rem; margin-top: 0.8rem; opacity: 0.7;">📖 114 Surahs · 📿 30+ Zikr · 🕋 Complete Rakat Guide · 🕌 Salah Tracker</div>
     </footer>
 
     <script>
         // ============================================================
-        // HIFZ AI PRO - Complete Quran Edition
-        // Built with care by Hammad Sayed, Grade 9D
-        // All 114 Surahs - Fully Working Voice AI
+        // HIFZ AI PRO - ULTIMATE EDITION
+        // Complete Quran + Salah Tracker + Rakat Guide + 30+ Zikr
+        // Built by Hammad Sayed, Grade 9D
         // ============================================================
 
-        // --- 1. COMPLETE SURAH LIST (114 Surahs) ---
+        // --- COMPLETE 114 SURAHS ---
         const SURAHS = [
             {n:1,name:"الفاتحة",en:"Al-Fatihah",ayahs:7},{n:2,name:"البقرة",en:"Al-Baqarah",ayahs:286},
             {n:3,name:"آل عمران",en:"Aal-E-Imran",ayahs:200},{n:4,name:"النساء",en:"An-Nisa",ayahs:176},
@@ -718,34 +897,74 @@
             {n:113,name:"الفلق",en:"Al-Falaq",ayahs:5},{n:114,name:"الناس",en:"An-Nas",ayahs:6}
         ];
 
-        const PRAYERS = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-        
-        const DUAS = [
-            {ar:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",tr:"Our Lord, give us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.",ref:"Quran 2:201"},
-            {ar:"رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي",tr:"My Lord, expand for me my chest and ease for me my task.",ref:"Quran 20:25-26"},
-            {ar:"رَبِّ زِدْنِي عِلْمًا",tr:"My Lord, increase me in knowledge.",ref:"Quran 20:114"},
-            {ar:"اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَىٰ وَالتُّقَىٰ وَالْعَفَافَ وَالْغِنَىٰ",tr:"O Allah, I ask You for guidance, piety, chastity and self-sufficiency.",ref:"Sahih Muslim"},
-            {ar:"لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",tr:"There is no god but Allah, alone, without partner. His is the kingdom and His is the praise, and He is over all things capable.",ref:"Sahih Bukhari"},
-            {ar:"رَبِّ لَا تَذَرْنِي فَرْدًا وَأَنتَ خَيْرُ الْوَارِثِينَ",tr:"My Lord, do not leave me alone, and You are the best of inheritors.",ref:"Quran 21:89"},
-            {ar:"اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ",tr:"O Allah, I ask You for forgiveness and well-being in this world and the Hereafter.",ref:"Sahih Bukhari"}
+        const PRAYERS = ['Fajr', 'Zohr', 'Asr', 'Maghrib', 'Isha'];
+
+        // --- COMPLETE RAKAT DATA (FINAL CORRECTED) ---
+        const RAKAT_DATA = {
+            Fajr: { sunnaMuakkadah: 2, farz: 2, sunnaGhair: 0, nafl: 0, witr: 0, total: 4 },
+            Zohr: { sunnaMuakkadah: 4, farz: 4, sunnaGhair: 2, nafl: 2, witr: 0, total: 12 },
+            Asr: { sunnaMuakkadah: 4, farz: 4, sunnaGhair: 0, nafl: 0, witr: 0, total: 8 },
+            Maghrib: { sunnaMuakkadah: 0, farz: 3, sunnaGhair: 2, nafl: 2, witr: 0, total: 7 },
+            Isha: { sunnaMuakkadah: 4, farz: 4, sunnaGhair: 2, nafl: 2, witr: 3, total: 17 },
+            Jumuah: { sunnaMuakkadah: 4, farz: 2, sunnaGhair: 4, nafl: 2, witr: 0, total: 14 }
+        };
+
+        // --- 30+ ZIKR COLLECTION ---
+        const ZIKR_COLLECTION = [
+            { text: "سُبْحَانَ اللَّهِ", translation: "Glory be to Allah", target: 33 },
+            { text: "الْحَمْدُ لِلَّهِ", translation: "All praise is for Allah", target: 33 },
+            { text: "اللَّهُ أَكْبَرُ", translation: "Allah is the Greatest", target: 33 },
+            { text: "أَسْتَغْفِرُ اللَّهَ", translation: "I seek forgiveness from Allah", target: 33 },
+            { text: "لَا إِلَٰهَ إِلَّا اللَّهُ", translation: "There is no god but Allah", target: 33 },
+            { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", translation: "Glory be to Allah and His is the praise", target: 33 },
+            { text: "سُبْحَانَ اللَّهِ الْعَظِيمِ", translation: "Glory be to Allah the Great", target: 33 },
+            { text: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", translation: "There is no power and no strength except with Allah", target: 33 },
+            { text: "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ", translation: "O Allah, send blessings upon Muhammad", target: 33 },
+            { text: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً", translation: "Our Lord, give us good in this world", target: 33 },
+            { text: "رَبَّنَا اغْفِرْ لَنَا", translation: "Our Lord, forgive us", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ", translation: "O Allah, I ask You for Paradise", target: 33 },
+            { text: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ", translation: "I seek refuge with Allah from Satan the accursed", target: 33 },
+            { text: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", translation: "In the name of Allah, the Most Gracious, the Most Merciful", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ", translation: "O Allah, I ask You for well-being", target: 33 },
+            { text: "رَبِّ زِدْنِي عِلْمًا", translation: "My Lord, increase me in knowledge", target: 33 },
+            { text: "اللَّهُمَّ اهْدِنِي", translation: "O Allah, guide me", target: 33 },
+            { text: "اللَّهُمَّ ارْحَمْنِي", translation: "O Allah, have mercy on me", target: 33 },
+            { text: "اللَّهُمَّ اغْفِرْ لِي", translation: "O Allah, forgive me", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَىٰ", translation: "O Allah, I ask You for guidance", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ التَّقْوَىٰ", translation: "O Allah, I ask You for piety", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعِزَّةَ", translation: "O Allah, I ask You for honor", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْكَرَامَةَ", translation: "O Allah, I ask You for nobility", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الرِّزْقَ", translation: "O Allah, I ask You for provision", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الصِّحَّةَ", translation: "O Allah, I ask You for health", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْإِيمَانَ", translation: "O Allah, I ask You for faith", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْيَقِينَ", translation: "O Allah, I ask You for certainty", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الصَّبْرَ", translation: "O Allah, I ask You for patience", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الشُّكْرَ", translation: "O Allah, I ask You for gratitude", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ", translation: "O Allah, I ask You for pardon", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الرَّحْمَةَ", translation: "O Allah, I ask You for mercy", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْغِنَىٰ", translation: "O Allah, I ask You for self-sufficiency", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْفَلَاحَ", translation: "O Allah, I ask You for success", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ النُّورَ", translation: "O Allah, I ask You for light", target: 33 },
+            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ السَّلَامَةَ", translation: "O Allah, I ask You for safety", target: 33 }
         ];
 
-        // --- 2. STATE ---
+        // --- STATE ---
         let quranData = {};
         let currentSurah = 1;
-        let currentAyah = 1;
-        let currentDua = 0;
         let prayerTimes = {};
-        let recognition = null;
-        let isListening = false;
+        
+        // Zikr State
+        let currentZikr = 0;
+        let zikrCount = parseInt(localStorage.getItem('zikrCount') || '0');
+        let zikrHistory = JSON.parse(localStorage.getItem('zikrHistory') || '[]');
+        let zikrCompleted = parseInt(localStorage.getItem('zikrCompleted') || '0');
+        let todayZikr = parseInt(localStorage.getItem('todayZikr') || '0');
+        let lastZikrDate = localStorage.getItem('lastZikrDate') || '';
         
         let streak = parseInt(localStorage.getItem('streak') || '0');
         let lastDate = localStorage.getItem('lastDate') || '';
-        let mastered = JSON.parse(localStorage.getItem('mastered') || '[]');
-        let attempts = parseInt(localStorage.getItem('attempts') || '0');
-        let totalMistakes = parseInt(localStorage.getItem('mistakes') || '0');
 
-        // --- 3. INIT ---
+        // --- INIT ---
         window.onload = async function() {
             loadTheme();
             populateDropdowns();
@@ -759,24 +978,23 @@
             
             await loadPrayerTimes();
             renderSalah();
-            loadDua();
+            renderRakat();
             getDailyChallenge();
             updateStats();
             updateStreak();
+            updateZikrDisplay();
             
             setInterval(updateCountdown, 1000);
-            setInterval(checkMissedPrayers, 60000);
             
             window.addEventListener('online', () => {
                 document.getElementById('offlineWarning').style.display = 'none';
-                loadQuran();
             });
             window.addEventListener('offline', () => {
                 document.getElementById('offlineWarning').style.display = 'block';
             });
         };
 
-        // --- 4. THEME ---
+        // --- THEME ---
         function toggleTheme() {
             const current = document.documentElement.getAttribute('data-theme');
             const newTheme = current === 'dark' ? 'light' : 'dark';
@@ -799,22 +1017,17 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- 5. QURAN ---
+        // --- QURAN ---
         function populateDropdowns() {
             const surahSelect = document.getElementById('surahSelect');
-            const hifzSurah = document.getElementById('hifzSurah');
             
             SURAHS.forEach(s => {
                 const opt1 = document.createElement('option');
                 opt1.value = s.n;
                 opt1.text = `${s.n}. ${s.en} (${s.name})`;
                 surahSelect.appendChild(opt1);
-                
-                const opt2 = opt1.cloneNode(true);
-                hifzSurah.appendChild(opt2);
             });
             loadSurah();
-            loadHifzAyahs();
         }
 
         async function loadQuran() {
@@ -875,6 +1088,7 @@
             
             const audio = document.getElementById('audioPlayer');
             audio.src = `https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/${String(num).padStart(3,'0')}.mp3`;
+            document.getElementById('audioStatus').innerHTML = `📻 Surah ${num} · ${info.en}`;
         }
 
         function jumpToSurah(num) {
@@ -884,261 +1098,21 @@
 
         function playAudio() { 
             const audio = document.getElementById('audioPlayer');
-            audio.play().catch(e => console.log('Audio:', e));
+            audio.play().then(() => {
+                document.getElementById('audioStatus').innerHTML = '🔊 Playing...';
+            }).catch(e => {
+                document.getElementById('audioStatus').innerHTML = '⚠️ Audio unavailable';
+            });
         }
         
         function stopAudio() { 
             const audio = document.getElementById('audioPlayer');
             audio.pause(); 
             audio.currentTime = 0; 
+            document.getElementById('audioStatus').innerHTML = '⏹ Stopped';
         }
 
-        // --- 6. HIFZ AI ---
-        function loadHifzAyahs() {
-            const num = parseInt(document.getElementById('hifzSurah').value);
-            const select = document.getElementById('hifzAyah');
-            select.innerHTML = '';
-            
-            if (!quranData[num]) return;
-            
-            const surah = quranData[num];
-            for (let i = 1; i <= surah.ayahs.length; i++) {
-                const opt = document.createElement('option');
-                opt.value = i;
-                opt.text = `Ayah ${i}`;
-                select.appendChild(opt);
-            }
-            loadHifzTarget();
-        }
-
-        function loadHifzTarget() {
-            const surahNum = parseInt(document.getElementById('hifzSurah').value);
-            const ayahNum = parseInt(document.getElementById('hifzAyah').value);
-            currentAyah = ayahNum;
-            
-            if (!quranData[surahNum]) return;
-            
-            const ayah = quranData[surahNum].ayahs[ayahNum - 1];
-            const display = document.getElementById('hifzTarget');
-            display.innerHTML = '';
-            
-            const words = ayah.text.split(' ');
-            words.forEach((word, idx) => {
-                const span = document.createElement('span');
-                span.className = 'word';
-                span.id = `hword-${idx}`;
-                span.innerText = word;
-                display.appendChild(span);
-                display.appendChild(document.createTextNode(' '));
-            });
-        }
-
-        function resetHifz() {
-            document.querySelectorAll('#hifzTarget .word').forEach(el => {
-                el.classList.remove('correct', 'wrong');
-            });
-            document.getElementById('correctWords').innerText = '0';
-            document.getElementById('wrongWords').innerText = '0';
-            document.getElementById('accuracy').innerText = '0%';
-            document.getElementById('feedback').innerHTML = '';
-            document.getElementById('voiceStatus').innerText = 'Ready';
-            document.getElementById('voiceStatus').style.color = 'var(--text-light)';
-            if (recognition) {
-                recognition.stop();
-                isListening = false;
-            }
-        }
-
-        function startHifz() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                alert('Speech recognition is not supported. Please use Chrome or Edge browser.');
-                return;
-            }
-            
-            const surahNum = parseInt(document.getElementById('hifzSurah').value);
-            const ayahNum = parseInt(document.getElementById('hifzAyah').value);
-            
-            if (!quranData[surahNum]) {
-                alert('Please wait for the Quran to load.');
-                return;
-            }
-            
-            const ayah = quranData[surahNum].ayahs[ayahNum - 1];
-            const targetWords = ayah.text.split(' ');
-            
-            let correct = 0;
-            let wrong = 0;
-            document.getElementById('correctWords').innerText = '0';
-            document.getElementById('wrongWords').innerText = '0';
-            document.getElementById('accuracy').innerText = '0%';
-            document.getElementById('feedback').innerHTML = '';
-            
-            targetWords.forEach((_, idx) => {
-                const el = document.getElementById(`hword-${idx}`);
-                if (el) el.classList.remove('correct', 'wrong');
-            });
-            
-            document.getElementById('voiceStatus').innerText = '🎙️ Listening...';
-            document.getElementById('voiceStatus').style.color = 'var(--success)';
-            
-            if (recognition) recognition.stop();
-            
-            recognition = new SpeechRecognition();
-            recognition.lang = 'ar-SA';
-            recognition.continuous = true;
-            recognition.interimResults = false;
-            
-            const matched = new Set();
-            let lastTranscript = '';
-            
-            recognition.onresult = (e) => {
-                const transcript = e.results[e.results.length - 1][0].transcript;
-                if (transcript === lastTranscript) return;
-                lastTranscript = transcript;
-                
-                const spokenWords = transcript.split(/\s+/);
-                
-                spokenWords.forEach(spoken => {
-                    const spokenNorm = normalizeArabic(spoken);
-                    if (spokenNorm.length < 1) return;
-                    
-                    targetWords.forEach((target, idx) => {
-                        if (matched.has(idx)) return;
-                        
-                        const targetNorm = normalizeArabic(target);
-                        const similarity = calculateSimilarity(spokenNorm, targetNorm);
-                        
-                        if (similarity >= 70) {
-                            matched.add(idx);
-                            correct++;
-                            
-                            const el = document.getElementById(`hword-${idx}`);
-                            if (el) {
-                                if (similarity >= 90) el.classList.add('correct');
-                                else el.classList.add('wrong');
-                            }
-                            
-                            document.getElementById('correctWords').innerText = correct;
-                            const total = correct + wrong;
-                            const acc = total > 0 ? Math.round((correct / total) * 100) : 0;
-                            document.getElementById('accuracy').innerText = acc + '%';
-                        }
-                    });
-                });
-            };
-            
-            recognition.onend = () => {
-                isListening = false;
-                document.getElementById('voiceStatus').innerText = '✅ Complete';
-                document.getElementById('voiceStatus').style.color = 'var(--text-light)';
-                
-                targetWords.forEach((_, idx) => {
-                    if (!matched.has(idx)) {
-                        wrong++;
-                        const el = document.getElementById(`hword-${idx}`);
-                        if (el) el.classList.add('wrong');
-                    }
-                });
-                document.getElementById('wrongWords').innerText = wrong;
-                
-                finishHifz(targetWords.length, correct, wrong);
-            };
-            
-            recognition.onerror = (e) => {
-                isListening = false;
-                document.getElementById('voiceStatus').innerText = '⚠️ Error: ' + e.error;
-                document.getElementById('voiceStatus').style.color = 'var(--danger)';
-                if (e.error === 'not-allowed') {
-                    alert('Please allow microphone access to use this feature.');
-                }
-            };
-            
-            try {
-                recognition.start();
-                isListening = true;
-            } catch(e) {
-                alert('Could not start speech recognition. Please try again.');
-            }
-        }
-
-        function stopHifz() {
-            if (recognition && isListening) {
-                recognition.stop();
-                isListening = false;
-                document.getElementById('voiceStatus').innerText = '⏹ Stopped';
-                document.getElementById('voiceStatus').style.color = 'var(--text-light)';
-            }
-        }
-
-        function normalizeArabic(text) {
-            return text
-                .replace(/[\u064B-\u065F\u0670\u0610-\u061A]/g, '')
-                .replace(/[إأآٱ]/g, 'ا')
-                .replace(/ة/g, 'ه')
-                .replace(/ى/g, 'ي')
-                .replace(/ؤ/g, 'و')
-                .replace(/ئ/g, 'ي')
-                .replace(/ـ/g, '')
-                .trim();
-        }
-
-        function calculateSimilarity(a, b) {
-            if (a === b) return 100;
-            if (a.length === 0 || b.length === 0) return 0;
-            
-            const matrix = [];
-            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
-            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-            
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1,
-                            matrix[i][j - 1] + 1,
-                            matrix[i - 1][j] + 1
-                        );
-                    }
-                }
-            }
-            
-            const maxLen = Math.max(a.length, b.length);
-            return Math.round((1 - matrix[b.length][a.length] / maxLen) * 100);
-        }
-
-        function finishHifz(total, correct, wrong) {
-            attempts++;
-            totalMistakes += wrong;
-            localStorage.setItem('attempts', attempts);
-            localStorage.setItem('mistakes', totalMistakes);
-            
-            const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
-            let feedback = '';
-            
-            if (accuracy === 100) {
-                feedback = `<div style="background: var(--success); color: white; padding: 1.2rem; border-radius: 12px; text-align: center; font-weight: 700; margin-top: 1rem; font-size: 1.1rem;">🌟 MashaAllah! Perfect recitation! You are a true Hafiz!</div>`;
-                const key = `${currentSurah}:${currentAyah}`;
-                if (!mastered.includes(key)) {
-                    mastered.push(key);
-                    localStorage.setItem('mastered', JSON.stringify(mastered));
-                }
-            } else if (accuracy >= 80) {
-                feedback = `<div style="background: var(--primary); color: white; padding: 1rem; border-radius: 12px; text-align: center; margin-top: 1rem;">👍 Very good! Just a few small mistakes. Keep practicing!</div>`;
-            } else if (accuracy >= 60) {
-                feedback = `<div style="background: var(--gold); color: var(--primary-dark); padding: 1rem; border-radius: 12px; text-align: center; margin-top: 1rem;">📖 Good effort! Practice this Ayah more and try again.</div>`;
-            } else {
-                feedback = `<div style="background: var(--danger); color: white; padding: 1rem; border-radius: 12px; text-align: center; margin-top: 1rem;">🔴 Keep practicing! Listen carefully and try again with focus.</div>`;
-            }
-            
-            document.getElementById('feedback').innerHTML = feedback;
-            updateStats();
-            updateStreak();
-        }
-
-        // --- 7. PRAYER TIMES ---
+        // --- PRAYER TIMES ---
         async function loadPrayerTimes() {
             try {
                 if (navigator.geolocation) {
@@ -1196,8 +1170,10 @@
             if (!list || Object.keys(prayerTimes).length === 0) return;
             
             list.innerHTML = '';
+            const prayerMap = { Fajr: 'Fajr', Dhuhr: 'Zohr', Asr: 'Asr', Maghrib: 'Maghrib', Isha: 'Isha' };
             PRAYERS.forEach(p => {
-                const time = prayerTimes[p] || '--:--';
+                const apiKey = Object.keys(prayerMap).find(k => prayerMap[k] === p) || p;
+                const time = prayerTimes[apiKey] || '--:--';
                 const item = document.createElement('div');
                 item.className = 'prayer-item';
                 item.innerHTML = `
@@ -1217,8 +1193,10 @@
             const nowMins = now.getHours() * 60 + now.getMinutes();
             let nextP = null, nextTime = null;
             
+            const prayerMap = { Fajr: 'Fajr', Dhuhr: 'Zohr', Asr: 'Asr', Maghrib: 'Maghrib', Isha: 'Isha' };
             for (const p of PRAYERS) {
-                const timeStr = prayerTimes[p];
+                const apiKey = Object.keys(prayerMap).find(k => prayerMap[k] === p) || p;
+                const timeStr = prayerTimes[apiKey];
                 if (!timeStr) continue;
                 const [h, m] = timeStr.split(':').map(Number);
                 const pMins = h * 60 + m;
@@ -1250,7 +1228,7 @@
                 `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
         }
 
-        // --- 8. SALAH ---
+        // --- SALAH ---
         function renderSalah() {
             const list = document.getElementById('salahList');
             if (!list) return;
@@ -1266,11 +1244,15 @@
                 item.className = `prayer-item ${completed ? 'completed' : ''}`;
                 item.onclick = () => toggleSalah(p);
                 
+                const prayerMap = { Fajr: 'Fajr', Dhuhr: 'Zohr', Asr: 'Asr', Maghrib: 'Maghrib', Isha: 'Isha' };
+                const apiKey = Object.keys(prayerMap).find(k => prayerMap[k] === p) || p;
+                const time = prayerTimes[apiKey] || '--:--';
+                
                 item.innerHTML = `
                     <input type="checkbox" class="prayer-checkbox" ${completed ? 'checked' : ''} onclick="event.stopPropagation(); toggleSalah('${p}')">
                     <div class="prayer-info">
                         <div class="prayer-name">${p}</div>
-                        <div style="color: var(--text-light); font-size: 0.85rem;">${prayerTimes[p] || '--:--'}</div>
+                        <div style="color: var(--text-light); font-size: 0.85rem;">${time}</div>
                     </div>
                     <div style="font-size: 1.5rem;">${completed ? '✅' : '⬜'}</div>
                 `;
@@ -1296,6 +1278,7 @@
             });
             document.getElementById('statSalah').innerText = `${count}/5`;
             document.getElementById('salahToday').innerText = `${count}/5`;
+            document.getElementById('dashSalah').innerText = `${count}/5`;
         }
 
         function updateStreak() {
@@ -1323,103 +1306,203 @@
             document.getElementById('statStreak').innerText = streak;
             document.getElementById('salahStreak').innerText = streak;
             document.getElementById('dashStreak').innerText = streak;
-            const score = mastered.length * 10 + streak * 5 + attempts * 2;
+            
+            const score = streak * 5 + zikrCompleted * 2;
             document.getElementById('statScore').innerText = score;
+            document.getElementById('dashScore').innerText = score;
+            document.getElementById('dashZikr').innerText = todayZikr;
+            document.getElementById('statZikr').innerText = todayZikr;
         }
 
-        // --- 9. LOCK SCREEN ---
-        function checkMissedPrayers() {
-            if (!prayerTimes || Object.keys(prayerTimes).length === 0) return;
+        // --- RAKAT ---
+        function renderRakat() {
+            const tbody = document.getElementById('rakatBody');
+            tbody.innerHTML = '';
             
-            const now = new Date();
-            const nowMins = now.getHours() * 60 + now.getMinutes();
-            const today = new Date().toDateString();
+            // All prayers including Jumuah
+            const allPrayers = ['Fajr', 'Zohr', 'Asr', 'Maghrib', 'Isha', 'Jumuah'];
             
-            let missed = [];
-            
-            for (const p of PRAYERS) {
-                const timeStr = prayerTimes[p];
-                if (!timeStr) continue;
+            allPrayers.forEach(prayer => {
+                const data = RAKAT_DATA[prayer];
+                if (!data) return;
                 
-                const [h, m] = timeStr.split(':').map(Number);
-                const pMins = h * 60 + m;
+                const row = document.createElement('tr');
+                const isJumuah = prayer === 'Jumuah';
+                row.innerHTML = `
+                    <td class="prayer-name-cell">${isJumuah ? 'Jumuah' : prayer}</td>
+                    <td class="sunnat ${data.sunnaMuakkadah > 0 ? 'muakkadah' : ''}">${data.sunnaMuakkadah > 0 ? data.sunnaMuakkadah : '-'}</td>
+                    <td class="farz">${data.farz}</td>
+                    <td class="sunnat">${data.sunnaGhair > 0 ? data.sunnaGhair : '-'}</td>
+                    <td class="nafl">${data.nafl > 0 ? data.nafl : '-'}</td>
+                    <td class="witr">${data.witr > 0 ? data.witr : '-'}</td>
+                    <td class="nafl">${isJumuah ? '2' : '-'}</td>
+                    <td class="total">${data.total}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // --- ZIKR ---
+        function selectZikr(type) {
+            const index = ZIKR_COLLECTION.findIndex(z => {
+                const key = z.text.replace(/[_\s]/g, '').toLowerCase();
+                return key.includes(type.toLowerCase().replace(/[_\s]/g, ''));
+            });
+            if (index !== -1) {
+                currentZikr = index;
+                zikrCount = 0;
+                localStorage.setItem('zikrCount', 0);
+                updateZikrDisplay();
+            }
+        }
+
+        function randomZikr() {
+            currentZikr = Math.floor(Math.random() * ZIKR_COLLECTION.length);
+            zikrCount = 0;
+            localStorage.setItem('zikrCount', 0);
+            updateZikrDisplay();
+            
+            const btn = document.querySelector('.zikr-random-btn');
+            btn.style.transform = 'scale(1.1)';
+            setTimeout(() => { btn.style.transform = 'scale(1)'; }, 300);
+        }
+
+        function updateZikrDisplay() {
+            const zikr = ZIKR_COLLECTION[currentZikr];
+            document.getElementById('zikrText').innerText = zikr.text;
+            document.getElementById('zikrTranslation').innerText = zikr.translation;
+            document.getElementById('zikrCount').innerText = zikrCount;
+            document.getElementById('zikrTarget').innerHTML = `Target: ${zikr.target}`;
+            
+            const progress = Math.min((zikrCount / zikr.target) * 100, 100);
+            document.getElementById('zikrProgress').style.width = progress + '%';
+            
+            renderZikrHistory();
+        }
+
+        function incrementZikr() {
+            const zikr = ZIKR_COLLECTION[currentZikr];
+            if (zikrCount < zikr.target) {
+                zikrCount++;
+                localStorage.setItem('zikrCount', zikrCount);
                 
-                if (nowMins > pMins + 15) {
-                    const key = `salah_${p.toLowerCase()}_${today}`;
-                    if (localStorage.getItem(key) !== 'true') {
-                        missed.push(p);
-                    }
+                const today = new Date().toDateString();
+                if (lastZikrDate !== today) {
+                    todayZikr = 0;
+                    lastZikrDate = today;
+                    localStorage.setItem('lastZikrDate', today);
                 }
+                todayZikr++;
+                localStorage.setItem('todayZikr', todayZikr);
+                
+                updateZikrDisplay();
+                updateStreak();
+                
+                if (navigator.vibrate) navigator.vibrate(10);
             }
             
-            const allCompleted = PRAYERS.every(p => 
-                localStorage.getItem(`salah_${p.toLowerCase()}_${today}`) === 'true'
-            );
-            
-            if (missed.length > 0 && !allCompleted) {
-                document.getElementById('lockOverlay').classList.add('active');
-                document.getElementById('lockPrayers').innerHTML = 
-                    missed.map(p => `<div style="margin: 0.5rem 0; font-size: 1.1rem;">❌ ${p}</div>`).join('');
+            if (zikrCount === zikr.target) {
+                completeZikr();
             }
         }
 
-        function unlockApp() {
-            document.getElementById('lockOverlay').classList.remove('active');
-            renderSalah();
-            const today = new Date().toDateString();
-            const allCompleted = PRAYERS.every(p => 
-                localStorage.getItem(`salah_${p.toLowerCase()}_${today}`) === 'true'
-            );
-            if (allCompleted) updateStreak();
+        function decrementZikr() {
+            if (zikrCount > 0) {
+                zikrCount--;
+                localStorage.setItem('zikrCount', zikrCount);
+                updateZikrDisplay();
+            }
         }
 
-        // --- 10. DUA ---
-        function loadDua() {
-            const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-            currentDua = day % DUAS.length;
-            showDua();
+        function resetZikr() {
+            zikrCount = 0;
+            localStorage.setItem('zikrCount', 0);
+            updateZikrDisplay();
         }
 
-        function showDua() {
-            const dua = DUAS[currentDua];
-            document.getElementById('duaArabic').innerText = dua.ar;
-            document.getElementById('duaTranslation').innerText = dua.tr;
-            document.getElementById('duaRef').innerText = `— ${dua.ref}`;
-            document.getElementById('duaCounter').innerText = `${currentDua + 1} / ${DUAS.length}`;
-        }
-
-        function nextDua() { currentDua = (currentDua + 1) % DUAS.length; showDua(); }
-        function prevDua() { currentDua = (currentDua - 1 + DUAS.length) % DUAS.length; showDua(); }
-
-        // --- 11. DASHBOARD ---
-        function updateStats() {
-            document.getElementById('statMastered').innerText = mastered.length;
-            document.getElementById('dashMastered').innerText = mastered.length;
-            document.getElementById('dashAttempts').innerText = attempts;
-            document.getElementById('dashMistakes').innerText = totalMistakes;
-            
-            const masteredList = document.getElementById('masteredList');
-            if (mastered.length === 0) {
-                masteredList.innerHTML = '<p style="color: var(--text-light);">No ayahs mastered yet. Keep going!</p>';
+        function completeZikr() {
+            const zikr = ZIKR_COLLECTION[currentZikr];
+            if (zikrCount >= zikr.target) {
+                zikrCompleted++;
+                localStorage.setItem('zikrCompleted', zikrCompleted);
+                
+                const entry = {
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    zikr: zikr.text,
+                    count: zikrCount
+                };
+                zikrHistory.unshift(entry);
+                if (zikrHistory.length > 50) zikrHistory.pop();
+                localStorage.setItem('zikrHistory', JSON.stringify(zikrHistory));
+                
+                alert(`✅ Completed! ${zikr.text}\n${zikr.translation}\nCount: ${zikrCount}`);
+                
+                zikrCount = 0;
+                localStorage.setItem('zikrCount', 0);
+                updateZikrDisplay();
+                updateStreak();
             } else {
-                masteredList.innerHTML = mastered.map(key => {
-                    const [surah, ayah] = key.split(':');
-                    const info = SURAHS.find(s => s.n == surah);
-                    return `<div style="padding: 0.75rem; background: var(--bg); border-radius: 10px; margin-bottom: 0.5rem; border-left: 4px solid var(--success);">
-                        ✨ ${info ? info.en : 'Surah'} ${surah}:${ayah}
-                    </div>`;
-                }).join('');
+                alert(`📿 Need ${zikr.target - zikrCount} more to complete ${zikr.text}`);
             }
+        }
+
+        function renderZikrHistory() {
+            const container = document.getElementById('zikrHistory');
+            if (zikrHistory.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light);">No Zikr history yet. Start counting!</p>';
+                return;
+            }
+            container.innerHTML = zikrHistory.map(entry => `
+                <div class="zikr-history-item">
+                    <div>
+                        <span class="zikr-arabic">${entry.zikr}</span>
+                        <span style="color: var(--text-light); font-size: 0.8rem; margin-left: 0.5rem;">×${entry.count}</span>
+                    </div>
+                    <div style="color: var(--text-light); font-size: 0.7rem;">${entry.date}</div>
+                </div>
+            `).join('');
+        }
+
+        // --- DAILY CHALLENGE ---
+        function getDailyChallenge() {
+            const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+            const surahIndex = day % SURAHS.length;
+            const surah = SURAHS[surahIndex];
+            const zikrIndex = day % ZIKR_COLLECTION.length;
+            const zikr = ZIKR_COLLECTION[zikrIndex];
+            document.getElementById('challengeText').innerHTML = `
+                📖 Memorize <strong>${surah.name}</strong> (${surah.en})<br>
+                📿 Complete Zikr: <strong style="font-family: 'Scheherazade New', serif; direction: rtl; display: inline-block;">${zikr.text.substring(0, 20)}...</strong>
+            `;
+        }
+
+        function startChallenge() {
+            showTab('quran', document.querySelectorAll('nav button')[1]);
+        }
+
+        // --- DASHBOARD ---
+        function updateStats() {
+            document.getElementById('statZikr').innerText = todayZikr;
+            document.getElementById('dashZikr').innerText = todayZikr;
         }
 
         function exportData() {
             const data = {
-                mastered: mastered,
-                attempts: attempts,
-                totalMistakes: totalMistakes,
                 streak: streak,
+                zikrCompleted: zikrCompleted,
+                zikrHistory: zikrHistory,
+                todayZikr: todayZikr,
+                salahData: {},
                 exportDate: new Date().toISOString()
             };
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('salah_')) {
+                    data.salahData[key] = localStorage.getItem(key);
+                }
+            }
             
             const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
             const url = URL.createObjectURL(blob);
@@ -1437,28 +1520,6 @@
                 if (confirm('Final confirmation: Delete all progress?')) {
                     localStorage.clear();
                     location.reload();
-                }
-            }
-        }
-
-        // --- 12. DAILY CHALLENGE ---
-        function getDailyChallenge() {
-            const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-            const surahIndex = day % SURAHS.length;
-            const surah = SURAHS[surahIndex];
-            document.getElementById('challengeText').innerHTML = `📖 Memorize <strong>${surah.name}</strong> (${surah.en}) today!`;
-        }
-
-        function startChallenge() {
-            const text = document.getElementById('challengeText').innerHTML;
-            const match = text.match(/(\d+)/);
-            if (match) {
-                const surahNum = parseInt(match[1]);
-                const surahSelect = document.getElementById('surahSelect');
-                if (surahSelect) {
-                    surahSelect.value = surahNum;
-                    loadSurah();
-                    showTab('quran', document.querySelectorAll('nav button')[1]);
                 }
             }
         }
