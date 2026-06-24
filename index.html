@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>HIFZ AI PRO · Complete Quran | Hammad Sayed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --gold: #f59e0b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+            --tajweed-red: #dc2626;
+            --tajweed-blue: #2563eb;
+            --tajweed-green: #16a34a;
+        }
+
+        [data-theme="dark"] {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --text-light: #94a3b8;
+            --border: #334155;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .arabic-text {
+            font-family: 'Scheherazade New', serif;
+            direction: rtl;
+            line-height: 2.4;
+        }
+
+        .tajweed-red { color: var(--tajweed-red); }
+        .tajweed-blue { color: var(--tajweed-blue); }
+        .tajweed-green { color: var(--tajweed-green); }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo span { color: var(--gold); }
+
+        .theme-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+        }
+        .theme-btn:hover { background: rgba(255,255,255,0.3); transform: rotate(20deg); }
+
+        nav {
+            display: flex;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            overflow-x: auto;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 5px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        nav button {
+            background: rgba(255,255,255,0.12);
+            border: none;
+            color: white;
+            padding: 0.45rem 0.9rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        nav button:hover { background: rgba(255,255,255,0.25); }
+        nav button.active {
+            background: var(--gold);
+            color: var(--primary-dark);
+            font-weight: 700;
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .tab { display: none; }
+        .tab.active { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+        .card h2 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--gold);
+            display: inline-block;
+        }
+
+        .btn {
+            padding: 0.7rem 1.4rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .btn:active { transform: scale(0.96); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-gold { background: var(--gold); color: var(--primary-dark); }
+        .btn-secondary { background: var(--border); color: var(--text); }
+        .btn-danger { background: var(--danger); color: white; }
+
+        select, input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: var(--card-bg);
+            color: var(--text);
+            margin-bottom: 1rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .quran-box {
+            background: linear-gradient(145deg, #fef3c7, #fde68a);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--gold);
+            font-size: 1.8rem;
+            max-height: 600px;
+            overflow-y: auto;
+            line-height: 2.6;
+        }
+        [data-theme="dark"] .quran-box {
+            background: linear-gradient(145deg, #422006, #713f12);
+            border-color: var(--gold);
+        }
+
+        .ayah-block {
+            margin-bottom: 1.2rem;
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+        .ayah-block:hover { background: rgba(255,255,255,0.3); }
+        [data-theme="dark"] .ayah-block { background: rgba(0,0,0,0.15); }
+
+        .ayah-num {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--primary-dark);
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin: 0 0.5rem;
+        }
+
+        .word {
+            display: inline-block;
+            padding: 0.15rem 0.3rem;
+            margin: 0.05rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-size: 1.6rem;
+        }
+        .word.correct { background: var(--success); color: white; animation: pop 0.4s; }
+        .word.wrong { background: var(--danger); color: white; animation: shake 0.4s; }
+        .word.highlight { background: rgba(245, 158, 11, 0.3); border-radius: 4px; }
+
+        @keyframes pop { 
+            0% { transform: scale(0.5); } 
+            70% { transform: scale(1.2); } 
+            100% { transform: scale(1); } 
+        }
+        @keyframes shake { 
+            0%, 100% { transform: translateX(0); } 
+            25% { transform: translateX(-6px); } 
+            75% { transform: translateX(6px); } 
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: 12px;
+            text-align: center;
+            border-left: 4px solid var(--gold);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .stat-value { font-size: 2rem; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 0.7rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .countdown-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+        }
+        .countdown-time { font-size: 3.2rem; font-weight: 800; color: var(--gold); font-family: monospace; letter-spacing: 2px; }
+
+        .prayer-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .prayer-item:hover { border-color: var(--primary); }
+        .prayer-item.completed { background: #d1fae5; border-color: var(--success); }
+        [data-theme="dark"] .prayer-item.completed { background: #064e3b; }
+        .prayer-info { flex: 1; }
+        .prayer-name { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+
+        .prayer-checkbox {
+            width: 22px;
+            height: 22px;
+            margin-right: 1rem;
+            accent-color: var(--success);
+            cursor: pointer;
+        }
+
+        .lock-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(6, 78, 59, 0.96);
+            z-index: 9999;
+            display: none;
+            align-items: center; justify-content: center;
+            color: white;
+            backdrop-filter: blur(8px);
+        }
+        .lock-overlay.active { display: flex; }
+        .lock-box {
+            text-align: center; padding: 3rem;
+            background: rgba(255,255,255,0.08);
+            border-radius: 24px; border: 2px solid var(--gold);
+            max-width: 480px; width: 90%;
+            backdrop-filter: blur(4px);
+        }
+        .lock-box h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+
+        footer {
+            text-align: center; padding: 2.5rem;
+            color: var(--text-light);
+            border-top: 3px solid var(--gold);
+            margin-top: 3rem;
+            background: var(--card-bg);
+        }
+        footer strong { color: var(--primary); }
+
+        #loadingIndicator {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin: 1rem;
+        }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--border);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        #offlineWarning {
+            display: none;
+            background: var(--gold);
+            color: var(--primary-dark);
+            padding: 0.8rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .surah-jump {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0;
+        }
+        .surah-jump .btn {
+            padding: 0.3rem 0.7rem;
+            font-size: 0.8rem;
+            min-width: 36px;
+        }
+
+        @media (max-width: 768px) {
+            .quran-box { font-size: 1.4rem; padding: 1rem; }
+            .countdown-time { font-size: 2.2rem; }
+            .logo { font-size: 1.2rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            nav button { font-size: 0.7rem; padding: 0.25rem 0.6rem; }
+            .quran-box { font-size: 1.1rem; padding: 0.75rem; }
+            .countdown-time { font-size: 1.6rem; }
+            .card { padding: 1rem; }
+            .lock-box { padding: 1.5rem; }
+            .word { font-size: 1.2rem; }
+        }
+
+        /* Scrollbar styling */
+        .quran-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .quran-box::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        .quran-box::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="logo">🕌 HIFZ AI <span>· Complete Quran</span></div>
+            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+        </div>
+        <nav>
+            <button class="active" onclick="showTab('home', this)">🏠 Home</button>
+            <button onclick="showTab('quran', this)">📖 Quran</button>
+            <button onclick="showTab('hifz', this)">🎤 Hifz</button>
+            <button onclick="showTab('salah', this)">🕌 Salah</button>
+            <button onclick="showTab('times', this)">⏰ Times</button>
+            <button onclick="showTab('qibla', this)">🧭 Qibla</button>
+            <button onclick="showTab('dua', this)">💎 Dua</button>
+            <button onclick="showTab('dashboard', this)">📊 Stats</button>
+        </nav>
+    </header>
+
+    <div id="loadingIndicator">
+        <div class="spinner"></div>
+        <div style="font-size: 1.2rem; font-weight: 600;">Loading the Holy Quran...</div>
+        <div style="color: var(--text-light); margin-top: 0.5rem;">This may take a moment</div>
+    </div>
+
+    <div class="container">
+
+        <!-- HOME TAB -->
+        <section id="home" class="tab active">
+            <div id="offlineWarning">⚠️ You're offline. Some features may be limited.</div>
+            
+            <div class="card">
+                <h2>🤲 Assalamu Alaikum</h2>
+                <p style="font-size: 1.05rem;">Welcome to <strong>HIFZ AI PRO</strong> — your complete AI companion for Quran memorization, Tajweed practice, and daily Salah tracking. Built with love for TECCEx 2026.</p>
+                <div style="margin-top: 0.8rem; color: var(--text-light); font-size: 0.9rem;">
+                    📖 <strong>114 Surahs</strong> · 🎤 <strong>Voice Recognition</strong> · 🕌 <strong>Full Salah Tracker</strong>
+                </div>
+            </div>
+
+            <div class="countdown-card">
+                <div style="font-size: 1.2rem; opacity: 0.9;">⏰ Next Prayer</div>
+                <div style="font-size: 2.2rem; font-weight: 700; margin: 0.5rem 0;" id="nextPrayer">Loading...</div>
+                <div class="countdown-time" id="countdown">--:--:--</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value" id="statMastered">0</div><div class="stat-label">✨ Mastered Ayahs</div></div>
+                <div class="stat-card"><div class="stat-value" id="statStreak">0</div><div class="stat-label">🔥 Streak Days</div></div>
+                <div class="stat-card"><div class="stat-value" id="statScore">0</div><div class="stat-label">⭐ Total Score</div></div>
+                <div class="stat-card"><div class="stat-value" id="statSalah">0/5</div><div class="stat-label">🕌 Today's Prayers</div></div>
+            </div>
+
+            <div class="card">
+                <h2>⚡ Quick Actions</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem;">
+                    <button class="btn btn-primary" onclick="showTab('hifz', document.querySelectorAll('nav button')[2])">🎤 Start Hifz</button>
+                    <button class="btn btn-primary" onclick="showTab('quran', document.querySelectorAll('nav button')[1])">📖 Read Quran</button>
+                    <button class="btn btn-primary" onclick="showTab('salah', document.querySelectorAll('nav button')[3])">🕌 Mark Salah</button>
+                    <button class="btn btn-gold" onclick="showTab('qibla', document.querySelectorAll('nav button')[5])">🧭 Find Qibla</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🎯 Daily Challenge</h2>
+                <div style="text-align: center; padding: 1rem;">
+                    <div style="font-size: 1.2rem; color: var(--primary);" id="challengeText">Loading challenge...</div>
+                    <button class="btn btn-gold" onclick="startChallenge()" style="margin-top: 0.8rem;">▶ Accept Challenge</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- QURAN TAB -->
+        <section id="quran" class="tab">
+            <div class="card">
+                <h2>📖 The Complete Holy Quran</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label style="font-weight: 600;">Select Surah:</label>
+                        <select id="surahSelect" onchange="loadSurah()"></select>
+                    </div>
+                </div>
+                <div class="surah-jump">
+                    <span style="font-weight: 600; align-self: center; font-size: 0.85rem;">Jump:</span>
+                    <button class="btn btn-secondary" onclick="jumpToSurah(1)">1</button>
+                    <button class="btn btn-secondary" onclick="jumpToSurah(36)">36</button>
+                    <button class="btn btn-secondary" onclick="jumpToSurah(55)">55</button>
+                    <button class="btn btn-secondary" onclick="jumpToSurah(67)">67</button>
+                    <button class="btn btn-secondary" onclick="jumpToSurah(112)">112</button>
+                    <button class="btn btn-secondary" onclick="jumpToSurah(114)">114</button>
+                </div>
+                <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                    <button class="btn btn-primary" onclick="playAudio()">🔊 Play Audio</button>
+                    <button class="btn btn-secondary" onclick="stopAudio()">⏹ Stop</button>
+                    <audio id="audioPlayer" controls style="flex: 1; min-width: 200px; max-width: 350px;"></audio>
+                </div>
+            </div>
+            <div class="card">
+                <div id="surahTitle" style="text-align: center; color: var(--primary); font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem;"></div>
+                <div id="quranDisplay" class="quran-box arabic-text">
+                    <p style="text-align: center; color: var(--text-light); font-size: 1.2rem;">Select a Surah to begin your journey...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HIFZ AI TAB -->
+        <section id="hifz" class="tab">
+            <div class="card">
+                <h2>🎤 Hifz AI · Voice Recognition</h2>
+                <p style="color: var(--text-light); margin-bottom: 1rem;">Select a Surah and Ayah, click Start, and recite. The AI will check each word.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label style="font-weight: 600;">Surah:</label>
+                        <select id="hifzSurah" onchange="loadHifzAyahs()"></select>
+                    </div>
+                    <div>
+                        <label style="font-weight: 600;">Ayah:</label>
+                        <select id="hifzAyah" onchange="loadHifzTarget()"></select>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.7rem; margin: 1rem 0; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="startHifz()">🎤 Start Reciting</button>
+                    <button class="btn btn-secondary" onclick="stopHifz()">⏹ Stop</button>
+                    <button class="btn btn-secondary" onclick="resetHifz()">🔄 Reset</button>
+                </div>
+                <div style="background: var(--card-bg); padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid var(--border);">
+                    <strong>🎙️ Status:</strong> <span id="voiceStatus" style="color: var(--text-light);">Ready</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🎯 Target Ayah</h3>
+                <div id="hifzTarget" class="quran-box arabic-text" style="max-height: 300px; font-size: 1.8rem;">
+                    Select a Surah and Ayah to begin.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 Session Results</h3>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value" id="correctWords" style="color: var(--success);">0</div><div class="stat-label">✅ Correct</div></div>
+                    <div class="stat-card"><div class="stat-value" id="wrongWords" style="color: var(--danger);">0</div><div class="stat-label">❌ Mistakes</div></div>
+                    <div class="stat-card"><div class="stat-value" id="accuracy" style="color: var(--primary);">0%</div><div class="stat-label">🎯 Accuracy</div></div>
+                </div>
+                <div id="feedback"></div>
+            </div>
+        </section>
+
+        <!-- SALAH TAB -->
+        <section id="salah" class="tab">
+            <div class="card">
+                <h2>🕌 Salah Tracker</h2>
+                <div style="background: #d1fae5; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; text-align: center; color: var(--primary-dark);">
+                    <strong>🔥 Streak: <span id="salahStreak">0</span> days · ✅ Today: <span id="salahToday">0/5</span></strong>
+                </div>
+                <div id="salahList"></div>
+            </div>
+        </section>
+
+        <!-- PRAYER TIMES TAB -->
+        <section id="times" class="tab">
+            <div class="card">
+                <h2>⏰ Prayer Times</h2>
+                <p style="color: var(--text-light); margin-bottom: 1rem;">Using Aladhan API · Muslim World League method</p>
+                <div id="prayerTimesList"></div>
+                <button class="btn btn-primary" onclick="loadPrayerTimes()" style="margin-top: 1rem;">🔄 Refresh</button>
+            </div>
+        </section>
+
+        <!-- QIBLA TAB -->
+        <section id="qibla" class="tab">
+            <div class="card" style="text-align: center;">
+                <h2>🧭 Qibla Direction</h2>
+                <div style="width: 220px; height: 220px; margin: 2rem auto; border-radius: 50%; background: radial-gradient(circle, #f0fdf4, #d1fae5); border: 4px solid var(--primary); position: relative;">
+                    <span style="position: absolute; top: 8px; font-weight: 700; color: var(--primary); font-size: 1.1rem;">N</span>
+                    <span style="position: absolute; bottom: 8px; font-weight: 700; color: var(--primary); font-size: 1.1rem;">S</span>
+                    <span style="position: absolute; right: 8px; font-weight: 700; color: var(--primary); font-size: 1.1rem;">E</span>
+                    <span style="position: absolute; left: 8px; font-weight: 700; color: var(--primary); font-size: 1.1rem;">W</span>
+                    <div id="qiblaNeedle" style="position: absolute; width: 4px; height: 90px; background: linear-gradient(to top, var(--danger) 50%, var(--primary) 50%); top: 20px; left: 50%; transform-origin: bottom center; transform: translateX(-50%) rotate(145deg);"></div>
+                    <div style="position: absolute; width: 20px; height: 20px; background: var(--gold); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid white;"></div>
+                </div>
+                <div style="font-size: 2.8rem; font-weight: 800; color: var(--primary);">145°</div>
+                <div style="color: var(--text-light); font-size: 1.1rem;">North-East · United Arab Emirates</div>
+                <div style="margin-top: 1rem; color: var(--text-light); font-size: 0.9rem;">🕋 Towards Makkah</div>
+            </div>
+        </section>
+
+        <!-- DUA TAB -->
+        <section id="dua" class="tab">
+            <div class="card">
+                <h2>💎 Daily Dua</h2>
+                <div style="text-align: center; padding: 2rem;">
+                    <div id="duaArabic" class="arabic-text" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem; line-height: 2.4;"></div>
+                    <div id="duaTranslation" style="font-style: italic; color: var(--text-light); font-size: 1.05rem; margin-bottom: 0.8rem;"></div>
+                    <div id="duaRef" style="color: var(--text-light); font-size: 0.9rem;"></div>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="prevDua()">◀ Previous</button>
+                    <span id="duaCounter" style="align-self: center; font-weight: 600;"></span>
+                    <button class="btn btn-secondary" onclick="nextDua()">Next ▶</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD TAB -->
+        <section id="dashboard" class="tab">
+            <div class="card">
+                <h2>📊 Progress Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value" id="dashMastered">0</div><div class="stat-label">✨ Mastered Ayahs</div></div>
+                    <div class="stat-card"><div class="stat-value" id="dashAttempts">0</div><div class="stat-label">📝 Total Attempts</div></div>
+                    <div class="stat-card"><div class="stat-value" id="dashMistakes">0</div><div class="stat-label">❌ Total Mistakes</div></div>
+                    <div class="stat-card"><div class="stat-value" id="dashStreak">0</div><div class="stat-label">🔥 Streak</div></div>
+                </div>
+            </div>
+            <div class="card">
+                <h3>🏆 Mastered Ayahs</h3>
+                <div id="masteredList" style="max-height: 300px; overflow-y: auto;"></div>
+            </div>
+            <div class="card">
+                <h3>⚙️ Data Management</h3>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="exportData()">📤 Export JSON</button>
+                    <button class="btn btn-danger" onclick="resetData()">🗑️ Reset All Data</button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- LOCK OVERLAY -->
+    <div id="lockOverlay" class="lock-overlay">
+        <div class="lock-box">
+            <div style="font-size: 4.5rem; margin-bottom: 0.5rem;">🔒</div>
+            <h1>Social Media Locked</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 1.5rem; opacity: 0.9;">🕌 You missed your prayer!</p>
+            <div id="lockPrayers" style="margin-bottom: 1.5rem; text-align: left; background: rgba(255,255,255,0.08); padding: 1rem; border-radius: 10px;"></div>
+            <button class="btn btn-gold" onclick="unlockApp()" style="width: 100%; padding: 1rem; font-size: 1.1rem;">✅ I Have Prayed — Unlock</button>
+        </div>
+    </div>
+
+    <footer>
+        <strong>🌙 HIFZ AI PRO · Complete Quran Edition</strong><br>
+        Built by <strong>Hammad Sayed</strong> · Grade 9D · Leaders Private School · UAE<br>
+        TECCEx 2026 · Theme: SPARK · Category: Tech-Horizon
+        <div class="arabic-text" style="font-size: 1.5rem; color: var(--primary); margin-top: 1rem;">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
+        <div style="font-size: 0.95rem; margin-top: 0.5rem;">"My Lord, increase me in knowledge." — Quran 20:114</div>
+        <div style="font-size: 0.8rem; margin-top: 0.8rem; opacity: 0.7;">📖 All 114 Surahs · Tajweed Ready · Voice AI Powered</div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // HIFZ AI PRO - Complete Quran Edition
+        // Built with care by Hammad Sayed, Grade 9D
+        // All 114 Surahs - Fully Working Voice AI
+        // ============================================================
+
+        // --- 1. COMPLETE SURAH LIST (114 Surahs) ---
+        const SURAHS = [
+            {n:1,name:"الفاتحة",en:"Al-Fatihah",ayahs:7},{n:2,name:"البقرة",en:"Al-Baqarah",ayahs:286},
+            {n:3,name:"آل عمران",en:"Aal-E-Imran",ayahs:200},{n:4,name:"النساء",en:"An-Nisa",ayahs:176},
+            {n:5,name:"المائدة",en:"Al-Ma'idah",ayahs:120},{n:6,name:"الأنعام",en:"Al-An'am",ayahs:165},
+            {n:7,name:"الأعراف",en:"Al-A'raf",ayahs:206},{n:8,name:"الأنفال",en:"Al-Anfal",ayahs:75},
+            {n:9,name:"التوبة",en:"At-Tawbah",ayahs:129},{n:10,name:"يونس",en:"Yunus",ayahs:109},
+            {n:11,name:"هود",en:"Hud",ayahs:123},{n:12,name:"يوسف",en:"Yusuf",ayahs:111},
+            {n:13,name:"الرعد",en:"Ar-Ra'd",ayahs:43},{n:14,name:"إبراهيم",en:"Ibrahim",ayahs:52},
+            {n:15,name:"الحجر",en:"Al-Hijr",ayahs:99},{n:16,name:"النحل",en:"An-Nahl",ayahs:128},
+            {n:17,name:"الإسراء",en:"Al-Isra",ayahs:111},{n:18,name:"الكهف",en:"Al-Kahf",ayahs:110},
+            {n:19,name:"مريم",en:"Maryam",ayahs:98},{n:20,name:"طه",en:"Taha",ayahs:135},
+            {n:21,name:"الأنبياء",en:"Al-Anbiya",ayahs:112},{n:22,name:"الحج",en:"Al-Hajj",ayahs:78},
+            {n:23,name:"المؤمنون",en:"Al-Mu'minun",ayahs:118},{n:24,name:"النور",en:"An-Nur",ayahs:64},
+            {n:25,name:"الفرقان",en:"Al-Furqan",ayahs:77},{n:26,name:"الشعراء",en:"Ash-Shu'ara",ayahs:227},
+            {n:27,name:"النمل",en:"An-Naml",ayahs:93},{n:28,name:"القصص",en:"Al-Qasas",ayahs:88},
+            {n:29,name:"العنكبوت",en:"Al-Ankabut",ayahs:69},{n:30,name:"الروم",en:"Ar-Rum",ayahs:60},
+            {n:31,name:"لقمان",en:"Luqman",ayahs:34},{n:32,name:"السجدة",en:"As-Sajdah",ayahs:30},
+            {n:33,name:"الأحزاب",en:"Al-Ahzab",ayahs:73},{n:34,name:"سبأ",en:"Saba",ayahs:54},
+            {n:35,name:"فاطر",en:"Fatir",ayahs:45},{n:36,name:"يس",en:"Ya-Sin",ayahs:83},
+            {n:37,name:"الصافات",en:"As-Saffat",ayahs:182},{n:38,name:"ص",en:"Sad",ayahs:88},
+            {n:39,name:"الزمر",en:"Az-Zumar",ayahs:75},{n:40,name:"غافر",en:"Ghafir",ayahs:85},
+            {n:41,name:"فصلت",en:"Fussilat",ayahs:54},{n:42,name:"الشورى",en:"Ash-Shura",ayahs:53},
+            {n:43,name:"الزخرف",en:"Az-Zukhruf",ayahs:89},{n:44,name:"الدخان",en:"Ad-Dukhan",ayahs:59},
+            {n:45,name:"الجاثية",en:"Al-Jathiyah",ayahs:37},{n:46,name:"الأحقاف",en:"Al-Ahqaf",ayahs:35},
+            {n:47,name:"محمد",en:"Muhammad",ayahs:38},{n:48,name:"الفتح",en:"Al-Fath",ayahs:29},
+            {n:49,name:"الحجرات",en:"Al-Hujurat",ayahs:18},{n:50,name:"ق",en:"Qaf",ayahs:45},
+            {n:51,name:"الذاريات",en:"Adh-Dhariyat",ayahs:60},{n:52,name:"الطور",en:"At-Tur",ayahs:49},
+            {n:53,name:"النجم",en:"An-Najm",ayahs:62},{n:54,name:"القمر",en:"Al-Qamar",ayahs:55},
+            {n:55,name:"الرحمن",en:"Ar-Rahman",ayahs:78},{n:56,name:"الواقعة",en:"Al-Waqi'ah",ayahs:96},
+            {n:57,name:"الحديد",en:"Al-Hadid",ayahs:29},{n:58,name:"المجادلة",en:"Al-Mujadila",ayahs:22},
+            {n:59,name:"الحشر",en:"Al-Hashr",ayahs:24},{n:60,name:"الممتحنة",en:"Al-Mumtahanah",ayahs:13},
+            {n:61,name:"الصف",en:"As-Saff",ayahs:14},{n:62,name:"الجمعة",en:"Al-Jumu'ah",ayahs:11},
+            {n:63,name:"المنافقون",en:"Al-Munafiqun",ayahs:11},{n:64,name:"التغابن",en:"At-Taghabun",ayahs:18},
+            {n:65,name:"الطلاق",en:"At-Talaq",ayahs:12},{n:66,name:"التحريم",en:"At-Tahrim",ayahs:12},
+            {n:67,name:"الملك",en:"Al-Mulk",ayahs:30},{n:68,name:"القلم",en:"Al-Qalam",ayahs:52},
+            {n:69,name:"الحاقة",en:"Al-Haqqah",ayahs:52},{n:70,name:"المعارج",en:"Al-Ma'arij",ayahs:44},
+            {n:71,name:"نوح",en:"Nuh",ayahs:28},{n:72,name:"الجن",en:"Al-Jinn",ayahs:28},
+            {n:73,name:"المزمل",en:"Al-Muzzammil",ayahs:20},{n:74,name:"المدثر",en:"Al-Muddaththir",ayahs:56},
+            {n:75,name:"القيامة",en:"Al-Qiyamah",ayahs:40},{n:76,name:"الإنسان",en:"Al-Insan",ayahs:31},
+            {n:77,name:"المرسلات",en:"Al-Mursalat",ayahs:50},{n:78,name:"النبأ",en:"An-Naba",ayahs:40},
+            {n:79,name:"النازعات",en:"An-Nazi'at",ayahs:46},{n:80,name:"عبس",en:"Abasa",ayahs:42},
+            {n:81,name:"التكوير",en:"At-Takwir",ayahs:29},{n:82,name:"الانفطار",en:"Al-Infitar",ayahs:19},
+            {n:83,name:"المطففين",en:"Al-Mutaffifin",ayahs:36},{n:84,name:"الانشقاق",en:"Al-Inshiqaq",ayahs:25},
+            {n:85,name:"البروج",en:"Al-Buruj",ayahs:22},{n:86,name:"الطارق",en:"At-Tariq",ayahs:17},
+            {n:87,name:"الأعلى",en:"Al-A'la",ayahs:19},{n:88,name:"الغاشية",en:"Al-Ghashiyah",ayahs:26},
+            {n:89,name:"الفجر",en:"Al-Fajr",ayahs:30},{n:90,name:"البلد",en:"Al-Balad",ayahs:20},
+            {n:91,name:"الشمس",en:"Ash-Shams",ayahs:15},{n:92,name:"الليل",en:"Al-Layl",ayahs:21},
+            {n:93,name:"الضحى",en:"Ad-Duha",ayahs:11},{n:94,name:"الشرح",en:"Ash-Sharh",ayahs:8},
+            {n:95,name:"التين",en:"At-Tin",ayahs:8},{n:96,name:"العلق",en:"Al-Alaq",ayahs:19},
+            {n:97,name:"القدر",en:"Al-Qadr",ayahs:5},{n:98,name:"البينة",en:"Al-Bayyinah",ayahs:8},
+            {n:99,name:"الزلزلة",en:"Az-Zalzalah",ayahs:8},{n:100,name:"العاديات",en:"Al-Adiyat",ayahs:11},
+            {n:101,name:"القارعة",en:"Al-Qari'ah",ayahs:11},{n:102,name:"التكاثر",en:"At-Takathur",ayahs:8},
+            {n:103,name:"العصر",en:"Al-Asr",ayahs:3},{n:104,name:"الهمزة",en:"Al-Humazah",ayahs:9},
+            {n:105,name:"الفيل",en:"Al-Fil",ayahs:5},{n:106,name:"قريش",en:"Quraysh",ayahs:4},
+            {n:107,name:"الماعون",en:"Al-Ma'un",ayahs:7},{n:108,name:"الكوثر",en:"Al-Kawthar",ayahs:3},
+            {n:109,name:"الكافرون",en:"Al-Kafirun",ayahs:6},{n:110,name:"النصر",en:"An-Nasr",ayahs:3},
+            {n:111,name:"المسد",en:"Al-Masad",ayahs:5},{n:112,name:"الإخلاص",en:"Al-Ikhlas",ayahs:4},
+            {n:113,name:"الفلق",en:"Al-Falaq",ayahs:5},{n:114,name:"الناس",en:"An-Nas",ayahs:6}
+        ];
+
+        const PRAYERS = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+        
+        const DUAS = [
+            {ar:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",tr:"Our Lord, give us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.",ref:"Quran 2:201"},
+            {ar:"رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي",tr:"My Lord, expand for me my chest and ease for me my task.",ref:"Quran 20:25-26"},
+            {ar:"رَبِّ زِدْنِي عِلْمًا",tr:"My Lord, increase me in knowledge.",ref:"Quran 20:114"},
+            {ar:"اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَىٰ وَالتُّقَىٰ وَالْعَفَافَ وَالْغِنَىٰ",tr:"O Allah, I ask You for guidance, piety, chastity and self-sufficiency.",ref:"Sahih Muslim"},
+            {ar:"لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",tr:"There is no god but Allah, alone, without partner. His is the kingdom and His is the praise, and He is over all things capable.",ref:"Sahih Bukhari"},
+            {ar:"رَبِّ لَا تَذَرْنِي فَرْدًا وَأَنتَ خَيْرُ الْوَارِثِينَ",tr:"My Lord, do not leave me alone, and You are the best of inheritors.",ref:"Quran 21:89"},
+            {ar:"اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ",tr:"O Allah, I ask You for forgiveness and well-being in this world and the Hereafter.",ref:"Sahih Bukhari"}
+        ];
+
+        // --- 2. STATE ---
+        let quranData = {};
+        let currentSurah = 1;
+        let currentAyah = 1;
+        let currentDua = 0;
+        let prayerTimes = {};
+        let recognition = null;
+        let isListening = false;
+        
+        let streak = parseInt(localStorage.getItem('streak') || '0');
+        let lastDate = localStorage.getItem('lastDate') || '';
+        let mastered = JSON.parse(localStorage.getItem('mastered') || '[]');
+        let attempts = parseInt(localStorage.getItem('attempts') || '0');
+        let totalMistakes = parseInt(localStorage.getItem('mistakes') || '0');
+
+        // --- 3. INIT ---
+        window.onload = async function() {
+            loadTheme();
+            populateDropdowns();
+            
+            if (!localStorage.getItem('quranCache')) {
+                document.getElementById('loadingIndicator').style.display = 'block';
+            }
+            
+            await loadQuran();
+            document.getElementById('loadingIndicator').style.display = 'none';
+            
+            await loadPrayerTimes();
+            renderSalah();
+            loadDua();
+            getDailyChallenge();
+            updateStats();
+            updateStreak();
+            
+            setInterval(updateCountdown, 1000);
+            setInterval(checkMissedPrayers, 60000);
+            
+            window.addEventListener('online', () => {
+                document.getElementById('offlineWarning').style.display = 'none';
+                loadQuran();
+            });
+            window.addEventListener('offline', () => {
+                document.getElementById('offlineWarning').style.display = 'block';
+            });
+        };
+
+        // --- 4. THEME ---
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeBtn').innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function loadTheme() {
+            const saved = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', saved);
+            document.getElementById('themeBtn').innerHTML = saved === 'dark' ? '☀️' : '🌙';
+        }
+
+        function showTab(tabId, btn) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if(btn) btn.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- 5. QURAN ---
+        function populateDropdowns() {
+            const surahSelect = document.getElementById('surahSelect');
+            const hifzSurah = document.getElementById('hifzSurah');
+            
+            SURAHS.forEach(s => {
+                const opt1 = document.createElement('option');
+                opt1.value = s.n;
+                opt1.text = `${s.n}. ${s.en} (${s.name})`;
+                surahSelect.appendChild(opt1);
+                
+                const opt2 = opt1.cloneNode(true);
+                hifzSurah.appendChild(opt2);
+            });
+            loadSurah();
+            loadHifzAyahs();
+        }
+
+        async function loadQuran() {
+            try {
+                const cached = localStorage.getItem('quranCache');
+                if (cached) {
+                    quranData = JSON.parse(cached);
+                    loadSurah();
+                    return;
+                }
+            } catch(e) {}
+            
+            try {
+                const res = await fetch('https://api.alquran.cloud/v1/quran/ar.uthmani');
+                const data = await res.json();
+                if (data.code === 200) {
+                    data.data.surahs.forEach(surah => {
+                        quranData[surah.number] = {
+                            name: surah.name,
+                            englishName: surah.englishName,
+                            ayahs: surah.ayahs.map(a => ({
+                                number: a.numberInSurah,
+                                text: a.text
+                            }))
+                        };
+                    });
+                    localStorage.setItem('quranCache', JSON.stringify(quranData));
+                    loadSurah();
+                }
+            } catch(e) {
+                console.error('Quran load error:', e);
+            }
+        }
+
+        function loadSurah() {
+            const num = parseInt(document.getElementById('surahSelect').value);
+            currentSurah = num;
+            
+            const display = document.getElementById('quranDisplay');
+            const title = document.getElementById('surahTitle');
+            
+            if (!quranData[num]) {
+                display.innerHTML = '<p style="text-align: center;">Loading Surah...</p>';
+                return;
+            }
+            
+            const surah = quranData[num];
+            const info = SURAHS.find(s => s.n === num);
+            title.innerText = `${info.en} · ${info.name}`;
+            
+            display.innerHTML = '';
+            surah.ayahs.forEach(ayah => {
+                const block = document.createElement('div');
+                block.className = 'ayah-block';
+                block.innerHTML = `${ayah.text} <span class="ayah-num">${ayah.number}</span>`;
+                display.appendChild(block);
+            });
+            
+            const audio = document.getElementById('audioPlayer');
+            audio.src = `https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/${String(num).padStart(3,'0')}.mp3`;
+        }
+
+        function jumpToSurah(num) {
+            document.getElementById('surahSelect').value = num;
+            loadSurah();
+        }
+
+        function playAudio() { 
+            const audio = document.getElementById('audioPlayer');
+            audio.play().catch(e => console.log('Audio:', e));
+        }
+        
+        function stopAudio() { 
+            const audio = document.getElementById('audioPlayer');
+            audio.pause(); 
+            audio.currentTime = 0; 
+        }
+
+        // --- 6. HIFZ AI ---
+        function loadHifzAyahs() {
+            const num = parseInt(document.getElementById('hifzSurah').value);
+            const select = document.getElementById('hifzAyah');
+            select.innerHTML = '';
+            
+            if (!quranData[num]) return;
+            
+            const surah = quranData[num];
+            for (let i = 1; i <= surah.ayahs.length; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.text = `Ayah ${i}`;
+                select.appendChild(opt);
+            }
+            loadHifzTarget();
+        }
+
+        function loadHifzTarget() {
+            const surahNum = parseInt(document.getElementById('hifzSurah').value);
+            const ayahNum = parseInt(document.getElementById('hifzAyah').value);
+            currentAyah = ayahNum;
+            
+            if (!quranData[surahNum]) return;
+            
+            const ayah = quranData[surahNum].ayahs[ayahNum - 1];
+            const display = document.getElementById('hifzTarget');
+            display.innerHTML = '';
+            
+            const words = ayah.text.split(' ');
+            words.forEach((word, idx) => {
+                const span = document.createElement('span');
+                span.className = 'word';
+                span.id = `hword-${idx}`;
+                span.innerText = word;
+                display.appendChild(span);
+                display.appendChild(document.createTextNode(' '));
+            });
+        }
+
+        function resetHifz() {
+            document.querySelectorAll('#hifzTarget .word').forEach(el => {
+                el.classList.remove('correct', 'wrong');
+            });
+            document.getElementById('correctWords').innerText = '0';
+            document.getElementById('wrongWords').innerText = '0';
+            document.getElementById('accuracy').innerText = '0%';
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('voiceStatus').innerText = 'Ready';
+            document.getElementById('voiceStatus').style.color = 'var(--text-light)';
+            if (recognition) {
+                recognition.stop();
+                isListening = false;
+            }
+        }
+
+        function startHifz() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert('Speech recognition is not supported. Please use Chrome or Edge browser.');
+                return;
+            }
+            
+            const surahNum = parseInt(document.getElementById('hifzSurah').value);
+            const ayahNum = parseInt(document.getElementById('hifzAyah').value);
+            
+            if (!quranData[surahNum]) {
+                alert('Please wait for the Quran to load.');
+                return;
+            }
+            
+            const ayah = quranData[surahNum].ayahs[ayahNum - 1];
+            const targetWords = ayah.text.split(' ');
+            
+            let correct = 0;
+            let wrong = 0;
+            document.getElementById('correctWords').innerText = '0';
+            document.getElementById('wrongWords').innerText = '0';
+            document.getElementById('accuracy').innerText = '0%';
+            document.getElementById('feedback').innerHTML = '';
+            
+            targetWords.forEach((_, idx) => {
+                const el = document.getElementById(`hword-${idx}`);
+                if (el) el.classList.remove('correct', 'wrong');
+            });
+            
+            document.getElementById('voiceStatus').innerText = '🎙️ Listening...';
+            document.getElementById('voiceStatus').style.color = 'var(--success)';
+            
+            if (recognition) recognition.stop();
+            
+            recognition = new SpeechRecognition();
+            recognition.lang = 'ar-SA';
+            recognition.continuous = true;
+            recognition.interimResults = false;
+            
+            const matched = new Set();
+            let lastTranscript = '';
+            
+            recognition.onresult = (e) => {
+                const transcript = e.results[e.results.length - 1][0].transcript;
+                if (transcript === lastTranscript) return;
+                lastTranscript = transcript;
+                
+                const spokenWords = transcript.split(/\s+/);
+                
+                spokenWords.forEach(spoken => {
+                    const spokenNorm = normalizeArabic(spoken);
+                    if (spokenNorm.length < 1) return;
+                    
+                    targetWords.forEach((target, idx) => {
+                        if (matched.has(idx)) return;
+                        
+                        const targetNorm = normalizeArabic(target);
+                        const similarity = calculateSimilarity(spokenNorm, targetNorm);
+                        
+                        if (similarity >= 70) {
+                            matched.add(idx);
+                            correct++;
+                            
+                            const el = document.getElementById(`hword-${idx}`);
+                            if (el) {
+                                if (similarity >= 90) el.classList.add('correct');
+                                else el.classList.add('wrong');
+                            }
+                            
+                            document.getElementById('correctWords').innerText = correct;
+                            const total = correct + wrong;
+                            const acc = total > 0 ? Math.round((correct / total) * 100) : 0;
+                            document.getElementById('accuracy').innerText = acc + '%';
+                        }
+                    });
+                });
+            };
+            
+            recognition.onend = () => {
+                isListening = false;
+                document.getElementById('voiceStatus').innerText = '✅ Complete';
+                document.getElementById('voiceStatus').style.color = 'var(--text-light)';
+                
+                targetWords.forEach((_, idx) => {
+                    if (!matched.has(idx)) {
+                        wrong++;
+                        const el = document.getElementById(`hword-${idx}`);
+                        if (el) el.classList.add('wrong');
+                    }
+                });
+                document.getElementById('wrongWords').innerText = wrong;
+                
+                finishHifz(targetWords.length, correct, wrong);
+            };
+            
+            recognition.onerror = (e) => {
+                isListening = false;
+                document.getElementById('voiceStatus').innerText = '⚠️ Error: ' + e.error;
+                document.getElementById('voiceStatus').style.color = 'var(--danger)';
+                if (e.error === 'not-allowed') {
+                    alert('Please allow microphone access to use this feature.');
+                }
+            };
+            
+            try {
+                recognition.start();
+                isListening = true;
+            } catch(e) {
+                alert('Could not start speech recognition. Please try again.');
+            }
+        }
+
+        function stopHifz() {
+            if (recognition && isListening) {
+                recognition.stop();
+                isListening = false;
+                document.getElementById('voiceStatus').innerText = '⏹ Stopped';
+                document.getElementById('voiceStatus').style.color = 'var(--text-light)';
+            }
+        }
+
+        function normalizeArabic(text) {
+            return text
+                .replace(/[\u064B-\u065F\u0670\u0610-\u061A]/g, '')
+                .replace(/[إأآٱ]/g, 'ا')
+                .replace(/ة/g, 'ه')
+                .replace(/ى/g, 'ي')
+                .replace(/ؤ/g, 'و')
+                .replace(/ئ/g, 'ي')
+                .replace(/ـ/g, '')
+                .trim();
+        }
+
+        function calculateSimilarity(a, b) {
+            if (a === b) return 100;
+            if (a.length === 0 || b.length === 0) return 0;
+            
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+            
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            
+            const maxLen = Math.max(a.length, b.length);
+            return Math.round((1 - matrix[b.length][a.length] / maxLen) * 100);
+        }
+
+        function finishHifz(total, correct, wrong) {
+            attempts++;
+            totalMistakes += wrong;
+            localStorage.setItem('attempts', attempts);
+            localStorage.setItem('mistakes', totalMistakes);
+            
+            const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
+            let feedback = '';
+            
+            if (accuracy === 100) {
+                feedback = `<div style="background: var(--success); color: white; padding: 1.2rem; border-radius: 12px; text-align: center; font-weight: 700; margin-top: 1rem; font-size: 1.1rem;">🌟 MashaAllah! Perfect recitation! You are a true Hafiz!</div>`;
+                const key = `${currentSurah}:${currentAyah}`;
+                if (!mastered.includes(key)) {
+                    mastered.push(key);
+                    localStorage.setItem('mastered', JSON.stringify(mastered));
+                }
+            } else if (accuracy >= 80) {
+                feedback = `<div style="background: var(--primary); color: white; padding: 1rem; border-radius: 12px; text-align: center; margin-top: 1rem;">👍 Very good! Just a few small mistakes. Keep practicing!</div>`;
+            } else if (accuracy >= 60) {
+                feedback = `<div style="background: var(--gold); color: var(--primary-dark); padding: 1rem; border-radius: 12px; text-align: center; margin-top: 1rem;">📖 Good effort! Practice this Ayah more and try again.</div>`;
+            } else {
+                feedback = `<div style="background: var(--danger); color: white; padding: 1rem; border-radius: 12px; text-align: center; margin-top: 1rem;">🔴 Keep practicing! Listen carefully and try again with focus.</div>`;
+            }
+            
+            document.getElementById('feedback').innerHTML = feedback;
+            updateStats();
+            updateStreak();
+        }
+
+        // --- 7. PRAYER TIMES ---
+        async function loadPrayerTimes() {
+            try {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        async pos => await fetchTimes(pos.coords.latitude, pos.coords.longitude),
+                        () => fetchTimesByCity('Dubai', 'UAE'),
+                        { timeout: 5000 }
+                    );
+                } else {
+                    await fetchTimesByCity('Dubai', 'UAE');
+                }
+            } catch(e) {
+                await fetchTimesByCity('Dubai', 'UAE');
+            }
+        }
+
+        async function fetchTimes(lat, lon) {
+            try {
+                const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=3`);
+                const data = await res.json();
+                if (data.code === 200) {
+                    prayerTimes = data.data.timings;
+                    renderPrayerTimes();
+                    updateCountdown();
+                }
+            } catch(e) {
+                await fetchTimesByCity('Dubai', 'UAE');
+            }
+        }
+
+        async function fetchTimesByCity(city, country) {
+            try {
+                const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=3`);
+                const data = await res.json();
+                if (data.code === 200) {
+                    prayerTimes = data.data.timings;
+                    renderPrayerTimes();
+                    updateCountdown();
+                }
+            } catch(e) {
+                prayerTimes = {
+                    Fajr: '05:00',
+                    Dhuhr: '12:30',
+                    Asr: '15:45',
+                    Maghrib: '18:15',
+                    Isha: '19:45'
+                };
+                renderPrayerTimes();
+                updateCountdown();
+            }
+        }
+
+        function renderPrayerTimes() {
+            const list = document.getElementById('prayerTimesList');
+            if (!list || Object.keys(prayerTimes).length === 0) return;
+            
+            list.innerHTML = '';
+            PRAYERS.forEach(p => {
+                const time = prayerTimes[p] || '--:--';
+                const item = document.createElement('div');
+                item.className = 'prayer-item';
+                item.innerHTML = `
+                    <div class="prayer-info">
+                        <div class="prayer-name">${p}</div>
+                        <div style="color: var(--text-light); font-size: 0.9rem;">${time}</div>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function updateCountdown() {
+            if (!prayerTimes || Object.keys(prayerTimes).length === 0) return;
+            
+            const now = new Date();
+            const nowMins = now.getHours() * 60 + now.getMinutes();
+            let nextP = null, nextTime = null;
+            
+            for (const p of PRAYERS) {
+                const timeStr = prayerTimes[p];
+                if (!timeStr) continue;
+                const [h, m] = timeStr.split(':').map(Number);
+                const pMins = h * 60 + m;
+                if (pMins > nowMins) {
+                    nextP = p;
+                    nextTime = timeStr;
+                    break;
+                }
+            }
+            
+            if (!nextP) {
+                nextP = 'Fajr (Tomorrow)';
+                nextTime = prayerTimes.Fajr || '05:00';
+            }
+            
+            document.getElementById('nextPrayer').innerText = nextP;
+            
+            const [h, m] = nextTime.split(':').map(Number);
+            let target = new Date();
+            target.setHours(h, m, 0, 0);
+            if (target < now) target.setDate(target.getDate() + 1);
+            
+            const diff = target - now;
+            const hrs = Math.floor(diff / 3600000);
+            const mins = Math.floor((diff % 3600000) / 60000);
+            const secs = Math.floor((diff % 60000) / 1000);
+            
+            document.getElementById('countdown').innerText = 
+                `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+        }
+
+        // --- 8. SALAH ---
+        function renderSalah() {
+            const list = document.getElementById('salahList');
+            if (!list) return;
+            
+            list.innerHTML = '';
+            const today = new Date().toDateString();
+            
+            PRAYERS.forEach(p => {
+                const key = `salah_${p.toLowerCase()}_${today}`;
+                const completed = localStorage.getItem(key) === 'true';
+                
+                const item = document.createElement('div');
+                item.className = `prayer-item ${completed ? 'completed' : ''}`;
+                item.onclick = () => toggleSalah(p);
+                
+                item.innerHTML = `
+                    <input type="checkbox" class="prayer-checkbox" ${completed ? 'checked' : ''} onclick="event.stopPropagation(); toggleSalah('${p}')">
+                    <div class="prayer-info">
+                        <div class="prayer-name">${p}</div>
+                        <div style="color: var(--text-light); font-size: 0.85rem;">${prayerTimes[p] || '--:--'}</div>
+                    </div>
+                    <div style="font-size: 1.5rem;">${completed ? '✅' : '⬜'}</div>
+                `;
+                list.appendChild(item);
+            });
+            updateSalahCount();
+        }
+
+        function toggleSalah(prayer) {
+            const today = new Date().toDateString();
+            const key = `salah_${prayer.toLowerCase()}_${today}`;
+            const current = localStorage.getItem(key) === 'true';
+            localStorage.setItem(key, (!current).toString());
+            renderSalah();
+            updateStreak();
+        }
+
+        function updateSalahCount() {
+            const today = new Date().toDateString();
+            let count = 0;
+            PRAYERS.forEach(p => {
+                if (localStorage.getItem(`salah_${p.toLowerCase()}_${today}`) === 'true') count++;
+            });
+            document.getElementById('statSalah').innerText = `${count}/5`;
+            document.getElementById('salahToday').innerText = `${count}/5`;
+        }
+
+        function updateStreak() {
+            const today = new Date().toDateString();
+            const yesterday = new Date(Date.now() - 86400000).toDateString();
+            
+            let completed = 0;
+            PRAYERS.forEach(p => {
+                if (localStorage.getItem(`salah_${p.toLowerCase()}_${today}`) === 'true') completed++;
+            });
+            
+            if (completed === 5) {
+                if (lastDate !== today) {
+                    if (lastDate === yesterday || lastDate === '') {
+                        streak++;
+                    } else if (lastDate !== today) {
+                        streak = 1;
+                    }
+                    lastDate = today;
+                    localStorage.setItem('streak', streak);
+                    localStorage.setItem('lastDate', today);
+                }
+            }
+            
+            document.getElementById('statStreak').innerText = streak;
+            document.getElementById('salahStreak').innerText = streak;
+            document.getElementById('dashStreak').innerText = streak;
+            const score = mastered.length * 10 + streak * 5 + attempts * 2;
+            document.getElementById('statScore').innerText = score;
+        }
+
+        // --- 9. LOCK SCREEN ---
+        function checkMissedPrayers() {
+            if (!prayerTimes || Object.keys(prayerTimes).length === 0) return;
+            
+            const now = new Date();
+            const nowMins = now.getHours() * 60 + now.getMinutes();
+            const today = new Date().toDateString();
+            
+            let missed = [];
+            
+            for (const p of PRAYERS) {
+                const timeStr = prayerTimes[p];
+                if (!timeStr) continue;
+                
+                const [h, m] = timeStr.split(':').map(Number);
+                const pMins = h * 60 + m;
+                
+                if (nowMins > pMins + 15) {
+                    const key = `salah_${p.toLowerCase()}_${today}`;
+                    if (localStorage.getItem(key) !== 'true') {
+                        missed.push(p);
+                    }
+                }
+            }
+            
+            const allCompleted = PRAYERS.every(p => 
+                localStorage.getItem(`salah_${p.toLowerCase()}_${today}`) === 'true'
+            );
+            
+            if (missed.length > 0 && !allCompleted) {
+                document.getElementById('lockOverlay').classList.add('active');
+                document.getElementById('lockPrayers').innerHTML = 
+                    missed.map(p => `<div style="margin: 0.5rem 0; font-size: 1.1rem;">❌ ${p}</div>`).join('');
+            }
+        }
+
+        function unlockApp() {
+            document.getElementById('lockOverlay').classList.remove('active');
+            renderSalah();
+            const today = new Date().toDateString();
+            const allCompleted = PRAYERS.every(p => 
+                localStorage.getItem(`salah_${p.toLowerCase()}_${today}`) === 'true'
+            );
+            if (allCompleted) updateStreak();
+        }
+
+        // --- 10. DUA ---
+        function loadDua() {
+            const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+            currentDua = day % DUAS.length;
+            showDua();
+        }
+
+        function showDua() {
+            const dua = DUAS[currentDua];
+            document.getElementById('duaArabic').innerText = dua.ar;
+            document.getElementById('duaTranslation').innerText = dua.tr;
+            document.getElementById('duaRef').innerText = `— ${dua.ref}`;
+            document.getElementById('duaCounter').innerText = `${currentDua + 1} / ${DUAS.length}`;
+        }
+
+        function nextDua() { currentDua = (currentDua + 1) % DUAS.length; showDua(); }
+        function prevDua() { currentDua = (currentDua - 1 + DUAS.length) % DUAS.length; showDua(); }
+
+        // --- 11. DASHBOARD ---
+        function updateStats() {
+            document.getElementById('statMastered').innerText = mastered.length;
+            document.getElementById('dashMastered').innerText = mastered.length;
+            document.getElementById('dashAttempts').innerText = attempts;
+            document.getElementById('dashMistakes').innerText = totalMistakes;
+            
+            const masteredList = document.getElementById('masteredList');
+            if (mastered.length === 0) {
+                masteredList.innerHTML = '<p style="color: var(--text-light);">No ayahs mastered yet. Keep going!</p>';
+            } else {
+                masteredList.innerHTML = mastered.map(key => {
+                    const [surah, ayah] = key.split(':');
+                    const info = SURAHS.find(s => s.n == surah);
+                    return `<div style="padding: 0.75rem; background: var(--bg); border-radius: 10px; margin-bottom: 0.5rem; border-left: 4px solid var(--success);">
+                        ✨ ${info ? info.en : 'Surah'} ${surah}:${ayah}
+                    </div>`;
+                }).join('');
+            }
+        }
+
+        function exportData() {
+            const data = {
+                mastered: mastered,
+                attempts: attempts,
+                totalMistakes: totalMistakes,
+                streak: streak,
+                exportDate: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `hifz-data-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function resetData() {
+            if (confirm('⚠️ Are you sure you want to reset ALL data? This cannot be undone!')) {
+                if (confirm('Final confirmation: Delete all progress?')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            }
+        }
+
+        // --- 12. DAILY CHALLENGE ---
+        function getDailyChallenge() {
+            const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+            const surahIndex = day % SURAHS.length;
+            const surah = SURAHS[surahIndex];
+            document.getElementById('challengeText').innerHTML = `📖 Memorize <strong>${surah.name}</strong> (${surah.en}) today!`;
+        }
+
+        function startChallenge() {
+            const text = document.getElementById('challengeText').innerHTML;
+            const match = text.match(/(\d+)/);
+            if (match) {
+                const surahNum = parseInt(match[1]);
+                const surahSelect = document.getElementById('surahSelect');
+                if (surahSelect) {
+                    surahSelect.value = surahNum;
+                    loadSurah();
+                    showTab('quran', document.querySelectorAll('nav button')[1]);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
