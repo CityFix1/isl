@@ -22,6 +22,10 @@
             --orange: #f97316;
             --blue: #3b82f6;
             --teal: #14b8a6;
+            --highlight-green: #22c55e;
+            --highlight-red: #ef4444;
+            --highlight-gold: #f59e0b;
+            --highlight-blue: #3b82f6;
         }
 
         [data-theme="dark"] {
@@ -32,6 +36,10 @@
             --text: #f1f5f9;
             --text-light: #94a3b8;
             --border: #334155;
+            --highlight-green: #4ade80;
+            --highlight-red: #f87171;
+            --highlight-gold: #fbbf24;
+            --highlight-blue: #60a5fa;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,7 +55,7 @@
         .arabic-text {
             font-family: 'Scheherazade New', serif;
             direction: rtl;
-            line-height: 2.6;
+            line-height: 2.8;
         }
 
         header {
@@ -199,7 +207,8 @@
             font-size: 1.8rem;
             max-height: 600px;
             overflow-y: auto;
-            line-height: 2.6;
+            line-height: 2.8;
+            position: relative;
         }
         [data-theme="dark"] .quran-box {
             background: linear-gradient(145deg, #422006, #713f12);
@@ -209,14 +218,51 @@
         .ayah-block {
             margin-bottom: 1.2rem;
             padding: 0.8rem 1rem;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.15);
             border-radius: 12px;
-            transition: all 0.3s;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            position: relative;
         }
-        .ayah-block:hover { background: rgba(255,255,255,0.3); }
+        .ayah-block:hover { background: rgba(255,255,255,0.25); }
         [data-theme="dark"] .ayah-block { background: rgba(0,0,0,0.15); }
+        [data-theme="dark"] .ayah-block:hover { background: rgba(0,0,0,0.25); }
 
-        .ayah-num {
+        /* Highlighting styles */
+        .ayah-block.highlight-green {
+            background: var(--highlight-green) !important;
+            color: white !important;
+            border-radius: 12px;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+            transition: all 0.3s ease;
+        }
+        .ayah-block.highlight-red {
+            background: var(--highlight-red) !important;
+            color: white !important;
+            border-radius: 12px;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+            transition: all 0.3s ease;
+        }
+        .ayah-block.highlight-gold {
+            background: var(--highlight-gold) !important;
+            color: var(--primary-dark) !important;
+            border-radius: 12px;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+            transition: all 0.3s ease;
+        }
+        .ayah-block.highlight-blue {
+            background: var(--highlight-blue) !important;
+            color: white !important;
+            border-radius: 12px;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .ayah-block .ayah-num {
             display: inline-block;
             background: var(--gold);
             color: var(--primary-dark);
@@ -228,6 +274,17 @@
             font-size: 0.85rem;
             font-weight: 700;
             margin: 0 0.5rem;
+            transition: all 0.3s;
+        }
+        .ayah-block.highlight-green .ayah-num,
+        .ayah-block.highlight-red .ayah-num,
+        .ayah-block.highlight-blue .ayah-num {
+            background: white;
+            color: var(--primary-dark);
+        }
+        .ayah-block.highlight-gold .ayah-num {
+            background: var(--primary-dark);
+            color: white;
         }
 
         .stats-grid {
@@ -282,7 +339,7 @@
             cursor: pointer;
         }
 
-        /* Rakat Table Styles - Exact match to image */
+        /* Rakat Table Styles */
         .rakat-table-wrapper {
             overflow-x: auto;
             margin-top: 0.5rem;
@@ -329,12 +386,11 @@
         .rakat-table .farz { color: var(--danger); font-weight: 700; }
         .rakat-table .nafl { color: var(--success); font-weight: 600; }
         .rakat-table .witr { color: var(--purple); font-weight: 600; }
-        .rakat-table .total { color: var(--primary); font-weight: 800; font-size: 1.05rem; }
-        .rakat-table .muakkadah { color: var(--orange); font-weight: 700; }
+        .rakat-table .total { color: var(--primary); font-weight: 800; font-size: 1.1rem; }
 
         .rakat-legend {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 0.5rem;
             margin: 1rem 0;
             padding: 0.5rem;
@@ -360,7 +416,24 @@
         .dot-farz { background: var(--danger); }
         .dot-nafl { background: var(--success); }
         .dot-witr { background: var(--purple); }
-        .dot-muakkadah { background: var(--orange); }
+
+        /* Qari Selector */
+        .qari-selector {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0;
+        }
+        .qari-selector .btn {
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+        }
+        .qari-selector .btn.active-qari {
+            background: var(--gold);
+            color: var(--primary-dark);
+            font-weight: 700;
+            transform: scale(1.05);
+        }
 
         /* Zikr Styles */
         .zikr-card {
@@ -480,6 +553,33 @@
             font-weight: 600;
         }
 
+        /* Highlight Status Indicator */
+        .highlight-status {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: var(--bg);
+            border-radius: 8px;
+            align-items: center;
+        }
+        .highlight-status .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+        }
+        .highlight-status .color-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        .color-dot.green { background: var(--highlight-green); }
+        .color-dot.red { background: var(--highlight-red); }
+        .color-dot.gold { background: var(--highlight-gold); }
+        .color-dot.blue { background: var(--highlight-blue); }
+
         footer {
             text-align: center; padding: 2.5rem;
             color: var(--text-light);
@@ -540,7 +640,7 @@
             .zikr-number { font-size: 2.8rem; }
             .zikr-btn { width: 60px; height: 60px; font-size: 1.6rem; }
             .zikr-select-grid { grid-template-columns: repeat(2, 1fr); }
-            .rakat-table { font-size: 0.75rem; min-width: 500px; }
+            .rakat-table { font-size: 0.75rem; min-width: 550px; }
             .rakat-table th, .rakat-table td { padding: 0.3rem 0.2rem; }
         }
 
@@ -553,8 +653,9 @@
             .zikr-number { font-size: 2rem; }
             .zikr-btn { width: 50px; height: 50px; font-size: 1.3rem; }
             .zikr-select-grid { grid-template-columns: 1fr 1fr; }
-            .rakat-table { font-size: 0.65rem; min-width: 400px; }
-            .rakat-table th, .rakat-table td { padding: 0.2rem 0.1rem; }
+            .rakat-table { font-size: 0.6rem; min-width: 400px; }
+            .rakat-table th, .rakat-table td { padding: 0.15rem 0.1rem; }
+            .highlight-status { font-size: 0.7rem; }
         }
 
         .quran-box::-webkit-scrollbar {
@@ -661,12 +762,32 @@
                     <button class="btn btn-secondary" onclick="jumpToSurah(112)">112</button>
                     <button class="btn btn-secondary" onclick="jumpToSurah(114)">114</button>
                 </div>
+                
+                <!-- Qari Selector -->
+                <div class="qari-selector">
+                    <span style="font-weight: 600; align-self: center; font-size: 0.85rem;">🎙️ Qari:</span>
+                    <button class="btn btn-primary active-qari" onclick="selectQari('mishary', this)">🎤 Mishary Al-Afasy</button>
+                    <button class="btn btn-primary" onclick="selectQari('sudais', this)">🎤 Sudais & Shuraim</button>
+                    <button class="btn btn-primary" onclick="selectQari('ghamdi', this)">🎤 Ghamdi</button>
+                </div>
+                
                 <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.5rem; align-items: center;">
-                    <button class="btn btn-primary" onclick="playAudio()">🔊 Play Audio</button>
+                    <button class="btn btn-primary" onclick="playAudio()">🔊 Play</button>
                     <button class="btn btn-secondary" onclick="stopAudio()">⏹ Stop</button>
+                    <button class="btn btn-secondary" onclick="clearHighlights()">🔄 Clear Highlights</button>
                     <audio id="audioPlayer" controls style="flex: 1; min-width: 200px; max-width: 350px; height: 40px;"></audio>
                 </div>
+                
                 <div id="audioStatus" style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem;"></div>
+                
+                <!-- Highlight Status -->
+                <div class="highlight-status">
+                    <span style="font-weight: 600; font-size: 0.85rem;">🎨 Highlight Colors:</span>
+                    <span class="status-item"><span class="color-dot green"></span> Current Ayah</span>
+                    <span class="status-item"><span class="color-dot gold"></span> Completed</span>
+                    <span class="status-item"><span class="color-dot red"></span> Next Ayah</span>
+                    <span style="font-size: 0.75rem; color: var(--text-light);">(Highlights fade back to normal after reading)</span>
+                </div>
             </div>
             <div class="card">
                 <div id="surahTitle" style="text-align: center; color: var(--primary); font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem;"></div>
@@ -691,14 +812,13 @@
         <section id="rakat" class="tab">
             <div class="card">
                 <h2>🕋 Table of Prayer Rakats</h2>
-                <p style="color: var(--text-light); margin-bottom: 0.5rem;">Complete guide with Sunnah (Muakkadah & Ghair Muakkadah), Farz, Nafl, and Witr.</p>
+                <p style="color: var(--text-light); margin-bottom: 0.5rem;">Complete guide showing Sunnat, Farz, Nafl, and Witr rakats for each prayer.</p>
                 
                 <div class="rakat-legend">
                     <div class="rakat-legend-item"><span class="dot dot-sunnat"></span> Sunnat</div>
                     <div class="rakat-legend-item"><span class="dot dot-farz"></span> Farz</div>
                     <div class="rakat-legend-item"><span class="dot dot-nafl"></span> Nafl</div>
                     <div class="rakat-legend-item"><span class="dot dot-witr"></span> Witr</div>
-                    <div class="rakat-legend-item"><span class="dot dot-muakkadah"></span> Muakkadah</div>
                 </div>
 
                 <div class="rakat-table-wrapper">
@@ -706,9 +826,9 @@
                         <thead>
                             <tr>
                                 <th style="min-width: 80px;">Prayer</th>
-                                <th class="header-sunnat">Sunnat<br><small>Muakkadah</small></th>
+                                <th class="header-sunnat">Sunnat</th>
                                 <th class="header-farz">Farz</th>
-                                <th class="header-sunnat">Sunnat<br><small>Ghair</small></th>
+                                <th class="header-sunnat">Sunnat</th>
                                 <th class="header-nafl">Nafl</th>
                                 <th class="header-witr">Witr</th>
                                 <th class="header-nafl">Nafl</th>
@@ -718,11 +838,6 @@
                         <tbody id="rakatBody">
                         </tbody>
                     </table>
-                </div>
-
-                <div style="margin-top: 1rem; padding: 1rem; background: var(--bg); border-radius: 10px; font-size: 0.9rem; color: var(--text-light);">
-                    <strong>📖 Note:</strong> Jumu'ah (Friday) prayer has 2 Farz rakats instead of Zohr. 
-                    The 4 Sunnah before and 4+2 Sunnah/Nafl after are highly recommended.
                 </div>
             </div>
         </section>
@@ -826,14 +941,14 @@
         TECCEx 2026 · Theme: SPARK · Category: Tech-Horizon
         <div class="arabic-text" style="font-size: 1.5rem; color: var(--primary); margin-top: 1rem;">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
         <div style="font-size: 0.95rem; margin-top: 0.5rem;">"My Lord, increase me in knowledge." — Quran 20:114</div>
-        <div style="font-size: 0.8rem; margin-top: 0.8rem; opacity: 0.7;">📖 114 Surahs · 📿 30+ Zikr · 🕋 Complete Rakat Guide · 🕌 Salah Tracker</div>
+        <div style="font-size: 0.8rem; margin-top: 0.8rem; opacity: 0.7;">📖 114 Surahs · 🎙️ 3 Qaris · 📿 30+ Zikr · 🕋 Complete Rakat Guide</div>
     </footer>
 
     <script>
         // ============================================================
         // HIFZ AI PRO - ULTIMATE EDITION
-        // Complete Quran + Salah Tracker + Rakat Guide + 30+ Zikr
         // Built by Hammad Sayed, Grade 9D
+        // Features: 3 Qaris + Live Quran Highlighting
         // ============================================================
 
         // --- COMPLETE 114 SURAHS ---
@@ -899,14 +1014,35 @@
 
         const PRAYERS = ['Fajr', 'Zohr', 'Asr', 'Maghrib', 'Isha'];
 
-        // --- COMPLETE RAKAT DATA (FINAL CORRECTED) ---
+        // --- QARI CONFIGURATION ---
+        const QARI_CONFIG = {
+            mishary: {
+                name: "Mishary Al-Afasy",
+                url: "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/",
+                color: "highlight-green"
+            },
+            sudais: {
+                name: "Sudais & Shuraim",
+                url: "https://download.quranicaudio.com/quran/abdurrahmaan_as_sudais_az_zayid/",
+                color: "highlight-gold"
+            },
+            ghamdi: {
+                name: "Ghamdi",
+                url: "https://download.quranicaudio.com/quran/saood_al_shuraym/",
+                color: "highlight-blue"
+            }
+        };
+
+        let currentQari = 'mishary';
+
+        // --- RAKAT DATA ---
         const RAKAT_DATA = {
-            Fajr: { sunnaMuakkadah: 2, farz: 2, sunnaGhair: 0, nafl: 0, witr: 0, total: 4 },
-            Zohr: { sunnaMuakkadah: 4, farz: 4, sunnaGhair: 2, nafl: 2, witr: 0, total: 12 },
-            Asr: { sunnaMuakkadah: 4, farz: 4, sunnaGhair: 0, nafl: 0, witr: 0, total: 8 },
-            Maghrib: { sunnaMuakkadah: 0, farz: 3, sunnaGhair: 2, nafl: 2, witr: 0, total: 7 },
-            Isha: { sunnaMuakkadah: 4, farz: 4, sunnaGhair: 2, nafl: 2, witr: 3, total: 17 },
-            Jumuah: { sunnaMuakkadah: 4, farz: 2, sunnaGhair: 4, nafl: 2, witr: 0, total: 14 }
+            Fajr: { sunnat1: 2, farz: 2, sunnat2: 0, nafl1: 0, witr: 0, nafl2: 0, total: 4 },
+            Zohr: { sunnat1: 4, farz: 4, sunnat2: 2, nafl1: 2, witr: 0, nafl2: 0, total: 12 },
+            Asr: { sunnat1: 4, farz: 4, sunnat2: 0, nafl1: 0, witr: 0, nafl2: 0, total: 8 },
+            Maghrib: { sunnat1: 0, farz: 3, sunnat2: 2, nafl1: 2, witr: 0, nafl2: 0, total: 7 },
+            Isha: { sunnat1: 4, farz: 4, sunnat2: 2, nafl1: 2, witr: 3, nafl2: 2, total: 17 },
+            Jumuah: { sunnat1: 4, farz: 2, sunnat2: 4, nafl1: 2, witr: 0, nafl2: 0, total: 12 }
         };
 
         // --- 30+ ZIKR COLLECTION ---
@@ -952,8 +1088,10 @@
         let quranData = {};
         let currentSurah = 1;
         let prayerTimes = {};
+        let highlightTimeout = null;
+        let currentAyahIndex = -1;
+        let totalAyahs = 0;
         
-        // Zikr State
         let currentZikr = 0;
         let zikrCount = parseInt(localStorage.getItem('zikrCount') || '0');
         let zikrHistory = JSON.parse(localStorage.getItem('zikrHistory') || '[]');
@@ -986,6 +1124,9 @@
             
             setInterval(updateCountdown, 1000);
             
+            // Audio event listeners for highlighting
+            setupAudioHighlighting();
+            
             window.addEventListener('online', () => {
                 document.getElementById('offlineWarning').style.display = 'none';
             });
@@ -1015,6 +1156,126 @@
             document.getElementById(tabId).classList.add('active');
             if(btn) btn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- QARI SELECTOR ---
+        function selectQari(qari, btn) {
+            currentQari = qari;
+            document.querySelectorAll('.qari-selector .btn').forEach(b => b.classList.remove('active-qari'));
+            if (btn) btn.classList.add('active-qari');
+            
+            // Update audio source if currently playing
+            const audio = document.getElementById('audioPlayer');
+            if (audio.src) {
+                const surahNum = parseInt(document.getElementById('surahSelect').value);
+                audio.src = getQariUrl(surahNum);
+                document.getElementById('audioStatus').innerHTML = `🎙️ ${QARI_CONFIG[qari].name} · Surah ${surahNum}`;
+            }
+        }
+
+        function getQariUrl(surahNum) {
+            const qari = QARI_CONFIG[currentQari];
+            return `${qari.url}${String(surahNum).padStart(3,'0')}.mp3`;
+        }
+
+        // --- AUDIO HIGHLIGHTING ---
+        function setupAudioHighlighting() {
+            const audio = document.getElementById('audioPlayer');
+            
+            audio.addEventListener('timeupdate', function() {
+                if (!audio.paused) {
+                    highlightCurrentAyah();
+                }
+            });
+            
+            audio.addEventListener('play', function() {
+                document.getElementById('audioStatus').innerHTML = `🔊 Playing... ${QARI_CONFIG[currentQari].name}`;
+                // Start highlighting
+                highlightCurrentAyah();
+            });
+            
+            audio.addEventListener('pause', function() {
+                document.getElementById('audioStatus').innerHTML = `⏸ Paused`;
+            });
+            
+            audio.addEventListener('ended', function() {
+                document.getElementById('audioStatus').innerHTML = `✅ Completed`;
+                clearAllHighlights();
+            });
+            
+            audio.addEventListener('error', function() {
+                document.getElementById('audioStatus').innerHTML = `⚠️ Audio unavailable for this Surah`;
+            });
+        }
+
+        function highlightCurrentAyah() {
+            const audio = document.getElementById('audioPlayer');
+            if (!audio.src || audio.paused) return;
+            
+            const ayahBlocks = document.querySelectorAll('#quranDisplay .ayah-block');
+            if (ayahBlocks.length === 0) return;
+            
+            const currentTime = audio.currentTime;
+            const duration = audio.duration || 180; // Fallback
+            
+            // Calculate which ayah based on time
+            // Each ayah roughly gets equal time based on duration
+            const estimatedTimePerAyah = duration / ayahBlocks.length;
+            const index = Math.min(Math.floor(currentTime / estimatedTimePerAyah), ayahBlocks.length - 1);
+            
+            if (index !== currentAyahIndex) {
+                currentAyahIndex = index;
+                updateHighlights(index, ayahBlocks);
+            }
+        }
+
+        function updateHighlights(index, ayahBlocks) {
+            // Clear all highlights first
+            ayahBlocks.forEach(el => {
+                el.classList.remove('highlight-green', 'highlight-red', 'highlight-gold', 'highlight-blue');
+            });
+            
+            // Get the color for current Qari
+            const colorClass = QARI_CONFIG[currentQari].color;
+            
+            // Highlight current ayah
+            if (ayahBlocks[index]) {
+                ayahBlocks[index].classList.add(colorClass);
+                
+                // Scroll to highlighted ayah
+                ayahBlocks[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            // Highlight next ayah (if exists) in red
+            if (index + 1 < ayahBlocks.length) {
+                ayahBlocks[index + 1].classList.add('highlight-red');
+            }
+            
+            // Previously highlighted ayahs (gold) - keep them but we want them to fade
+            // We'll add gold to completed ones
+            for (let i = 0; i < index; i++) {
+                if (ayahBlocks[i]) {
+                    ayahBlocks[i].classList.remove('highlight-green', 'highlight-red', 'highlight-blue');
+                    ayahBlocks[i].classList.add('highlight-gold');
+                    
+                    // Auto remove gold after 3 seconds (fade back to normal)
+                    setTimeout(() => {
+                        ayahBlocks[i].classList.remove('highlight-gold');
+                    }, 3000);
+                }
+            }
+        }
+
+        function clearAllHighlights() {
+            document.querySelectorAll('#quranDisplay .ayah-block').forEach(el => {
+                el.classList.remove('highlight-green', 'highlight-red', 'highlight-gold', 'highlight-blue');
+            });
+            currentAyahIndex = -1;
+        }
+
+        function clearHighlights() {
+            clearAllHighlights();
+            document.getElementById('audioStatus').innerHTML = '🔄 Highlights cleared';
         }
 
         // --- QURAN ---
@@ -1079,29 +1340,39 @@
             title.innerText = `${info.en} · ${info.name}`;
             
             display.innerHTML = '';
-            surah.ayahs.forEach(ayah => {
+            surah.ayahs.forEach((ayah, idx) => {
                 const block = document.createElement('div');
                 block.className = 'ayah-block';
+                block.id = `ayah-${idx}`;
                 block.innerHTML = `${ayah.text} <span class="ayah-num">${ayah.number}</span>`;
                 display.appendChild(block);
             });
             
+            totalAyahs = surah.ayahs.length;
+            currentAyahIndex = -1;
+            
+            // Update audio with current Qari
             const audio = document.getElementById('audioPlayer');
-            audio.src = `https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/${String(num).padStart(3,'0')}.mp3`;
-            document.getElementById('audioStatus').innerHTML = `📻 Surah ${num} · ${info.en}`;
+            audio.src = getQariUrl(num);
+            document.getElementById('audioStatus').innerHTML = `🎙️ ${QARI_CONFIG[currentQari].name} · Surah ${num} · ${info.en}`;
+            
+            // Clear highlights
+            clearAllHighlights();
         }
 
         function jumpToSurah(num) {
             document.getElementById('surahSelect').value = num;
             loadSurah();
+            // Stop audio when changing surah
+            stopAudio();
         }
 
         function playAudio() { 
             const audio = document.getElementById('audioPlayer');
             audio.play().then(() => {
-                document.getElementById('audioStatus').innerHTML = '🔊 Playing...';
+                document.getElementById('audioStatus').innerHTML = `🔊 Playing... ${QARI_CONFIG[currentQari].name}`;
             }).catch(e => {
-                document.getElementById('audioStatus').innerHTML = '⚠️ Audio unavailable';
+                document.getElementById('audioStatus').innerHTML = '⚠️ Audio unavailable (try another Qari)';
             });
         }
         
@@ -1110,6 +1381,7 @@
             audio.pause(); 
             audio.currentTime = 0; 
             document.getElementById('audioStatus').innerHTML = '⏹ Stopped';
+            clearAllHighlights();
         }
 
         // --- PRAYER TIMES ---
@@ -1319,7 +1591,6 @@
             const tbody = document.getElementById('rakatBody');
             tbody.innerHTML = '';
             
-            // All prayers including Jumuah
             const allPrayers = ['Fajr', 'Zohr', 'Asr', 'Maghrib', 'Isha', 'Jumuah'];
             
             allPrayers.forEach(prayer => {
@@ -1328,14 +1599,20 @@
                 
                 const row = document.createElement('tr');
                 const isJumuah = prayer === 'Jumuah';
+                
+                let sunnat2Display = data.sunnat2;
+                if (isJumuah && data.sunnat2 === 4) {
+                    sunnat2Display = '4+2';
+                }
+                
                 row.innerHTML = `
                     <td class="prayer-name-cell">${isJumuah ? 'Jumuah' : prayer}</td>
-                    <td class="sunnat ${data.sunnaMuakkadah > 0 ? 'muakkadah' : ''}">${data.sunnaMuakkadah > 0 ? data.sunnaMuakkadah : '-'}</td>
+                    <td class="sunnat">${data.sunnat1 > 0 ? data.sunnat1 : '-'}</td>
                     <td class="farz">${data.farz}</td>
-                    <td class="sunnat">${data.sunnaGhair > 0 ? data.sunnaGhair : '-'}</td>
-                    <td class="nafl">${data.nafl > 0 ? data.nafl : '-'}</td>
+                    <td class="sunnat">${sunnat2Display > 0 ? sunnat2Display : '-'}</td>
+                    <td class="nafl">${data.nafl1 > 0 ? data.nafl1 : '-'}</td>
                     <td class="witr">${data.witr > 0 ? data.witr : '-'}</td>
-                    <td class="nafl">${isJumuah ? '2' : '-'}</td>
+                    <td class="nafl">${data.nafl2 > 0 ? data.nafl2 : '-'}</td>
                     <td class="total">${data.total}</td>
                 `;
                 tbody.appendChild(row);
